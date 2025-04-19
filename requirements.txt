@@ -33,7 +33,7 @@ moviepy==1.0.3
 multidict==6.4.3
 mysql-connector-python==9.3.0
 numpy==2.2.4
-pillow==10.4.0
+pillow
 proglog==0.1.11
 propcache==0.3.1
 pyarrow==19.0.1
