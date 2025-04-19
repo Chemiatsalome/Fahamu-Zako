@@ -17,3 +17,5 @@ env/
 .DS_Store
 node_modules/
 .git/
+"*.pyc" 
+"__pycache__/" 
