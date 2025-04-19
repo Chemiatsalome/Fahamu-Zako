@@ -36,5 +36,5 @@ app.register_blueprint(chat_bp, url_prefix="/chat")  # Register the blueprint
 
 # if __name__ == "__main__":
 #     serve(app, host='0.0.0.0', port=8000)
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80, debug=True)
