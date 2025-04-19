@@ -19,6 +19,7 @@ Flask-Migrate==4.1.0
 Flask-SQLAlchemy==3.1.1
 frozenlist==1.6.0
 greenlet==3.2.0
+pip install gunicorn
 idna==3.10
 imageio==2.37.0
 imageio-ffmpeg==0.5.1
