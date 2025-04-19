@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Human Rights Instruments</title>
-    <!-- Bootstrap CSS -->
-     <!-- Include Bootstrap Icons or Font Awesome -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Human Rights Platform</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="icon" href="{{ url_for('static', filename='images/legalImage6.jpg') }}" type="image/x-icon"> 
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <!-- rest of your code -->
+   
     <style>
       /* General Styling */
 html, body {
@@ -22,29 +24,10 @@ html, body {
     padding: 0;
 }
 
-/* Header */
-.header-bg {
-    background: #1f5b09;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.custom-navbar {
+    background-color: #1f5b09 !important;
 }
-.header-bg h1 {
-    color: #FAF3E0;
-    font-size: 2rem;
-    font-weight: bold;
-}
-.header-bg nav a {
-    color: #FAF3E0;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 15px;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-.header-bg nav a:hover {
-    color: #FFD700;
-}
+
 
 /* Sections */
 .section {
@@ -59,7 +42,6 @@ html, body {
     font-weight: bold;
 }
 
-/* Cards */
 .card {
     border-radius: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -68,18 +50,31 @@ html, body {
     padding: 20px;
     text-align: center;
 }
+
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 .card-title {
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
+
 .card-text {
     color: #555;
     font-size: 1rem;
+}
+
+.card {
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 20px;
+    }
 }
 
 /* Buttons */
@@ -133,6 +128,7 @@ html, body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .section {
@@ -164,31 +160,40 @@ footer {
     bottom: 0;
     margin-top: 20px;
 }
-.translate-box {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
+
 
     </style>
 </head>
 <body>
 
-<header class="header-bg text-white text-center p-4">
-    <h1>🎉 FAHAMU HAKI ZAKO 🎉</h1>
-    <div id="google_translate_element" class="translate-box"> Translate</div> 
-    <nav>
-        <a href="{{ url_for('approutes.index') }}" class="text-white mx-3">Home</a>
-        <a href="{{ url_for('login.logout') }}" class="text-white mx-3">Logout</a>
-        
-        
-    </nav>
-</header>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+            <a class="navbar-brand" href="#">Human Rights Awareness</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login.logout') }}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('signup.signup') }}">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('approutes.index') }}">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="google_translate_element" class="translate-box"></div>
+        </nav>
+    </header>
+    
+    
 <br>
 
 <div class="content container my-4">
@@ -198,59 +203,97 @@ footer {
             <button class="btn btn-outline-success" type="button">🔍 Search</button>
         </div>
     </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+   
     <button class="btn btn-info" data-toggle="modal" data-target="#chatbotModal">Chat with AI</button>
     <br><br>
 
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body text-center">
-                <h5 class="card-title">🌍 African Charter on Human and Peoples' Rights</h5>
-                <p class="card-text">A charter that outlines the rights and freedoms of African peoples.</p>
-                <a href="{{ url_for('static', filename='legal_documents/ACPH.pdf') }}" class="btn btn-success" target="_blank">Select</a>
-                <button class="btn btn-brown find-tutor-btn" 
-                        data-document="ACPH.pdf" 
-                        data-toggle="modal" 
-                        data-target="#findTutorModal">Find Tutor</button>
+    <div class="container">
+        <div class="row">
+            
+               
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🏛️ Kampala Convention</h5>
+                        <p class="card-text">A convention focused on the protection and assistance of internally displaced persons in Africa.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="Kampala_Convention.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🏢 AU Institutions</h5>
+                        <p class="card-text">Information about the various institutions of the African Union.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="Specialised Agencies & Institutions _ African Union.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🌍 African Charter on Human and Peoples' Rights (Banjul Charter)</h5>
+                        <p class="card-text">This charter outlines the rights and freedoms of African peoples.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="African_Charter_Human_Peoples_Rights.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🌍 HUMAN RIGHTS STRATEGY FOR AFRICA:</h5>
+                        <p class="card-text">A collection of significant human rights documents.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="human_rights_strategy_for_africa.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🌍 Compendium of Key Human Rights Documents of the African Union:</h5>
+                        <p class="card-text">A collection of significant human rights documents.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="compedium_key_human_rights.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">🌍 Making the Kampala Convention work for IDPs</h5>
+                        <p class="card-text">A collection of significant human rights documents.</p>
+                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" class="btn btn-success" target="_blank">Select</a>
+                        <button class="btn btn-brown find-tutor-btn" 
+                                data-document="compedium_key_human_rights.pdf.pdf" 
+                                data-toggle="modal" 
+                                data-target="#findTutorModal">Find Tutor</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body text-center">
-                <h5 class="card-title">🏛️ Kampala Convention</h5>
-                <p class="card-text">A convention focused on the protection and assistance of internally displaced persons in Africa.</p>
-                <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" class="btn btn-success" target="_blank">Select</a>
-                <button class="btn btn-brown find-tutor-btn" 
-                        data-document="Kampala_Convention.pdf" 
-                        data-toggle="modal" 
-                        data-target="#findTutorModal">Find Tutor</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body text-center">
-                <h5 class="card-title">🏢 AU Institutions</h5>
-                <p class="card-text">Information about the various institutions of the African Union.</p>
-                <a href="https://au.int/en/specialised-agencies-institutions" class="btn btn-success" target="_blank">Select</a>
-                <button class="btn btn-brown find-tutor-btn" 
-                        data-document="AU_Institutions.pdf" 
-                        data-toggle="modal" 
-                        data-target="#findTutorModal">Find Tutor</button>
-            </div>
-        </div>
-    </div>
     
     <!-- Chatbot Modal -->
     <div class="modal fade" id="chatbotModal" tabindex="-1" role="dialog" aria-labelledby="chatbotModalLabel" aria-hidden="true">
@@ -303,18 +346,18 @@ footer {
                                     <p>Summary Tutor</p>
                                 </button>
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <button class="btn btn-link" onclick="selectTutor('video')">
                                     <i class="fas fa-chalkboard-teacher fa-3x"></i>
                                     <p>Visual Teacher</p>
                                 </button>
-                            </div>
-                            <div class="col-md-4">
+                            </div> -->
+                            <!-- <div class="col-md-4">
                                 <button class="btn btn-link" onclick="selectTutor('audio')">
                                     <i class="fas fa-podcast fa-3x"></i>
                                     <p>Podcast Tutor</p>
                                 </button>
-                            </div>
+                            </div> -->
                             
                         </div>
                     </div>
@@ -326,14 +369,8 @@ footer {
             </div>
             
             <div class="modal-footer">
-                <label for="languageSelect">Translate to: </label>
-                <select id="languageSelect" class="form-control" style="display: inline-block; width: auto;">
-                    <option value="swahili">Swahili</option>
-                    <option value="french">French</option>
-                    <option value="spanish">Spanish</option>
-                    <!-- Add more languages here -->
-                </select>
-                <button type="button" class="btn btn-primary" onclick="translateContent()">Translate</button>
+                
+                <div id="google_translate_element" class="translate-box"></div>
                 <button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
             </div>
             
@@ -518,13 +555,43 @@ $(document).ready(function() {
     }
 });
 
+  document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector('.form-control');
+        const searchButton = document.querySelector('.btn-outline-success');
+        const cards = document.querySelectorAll('.card');
+    
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+    
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    card.parentElement.style.display = "block"; // show the column
+                } else {
+                    card.parentElement.style.display = "none"; // hide the column
+                }
+            });
+        }
+    
+        // Trigger search on button click
+        searchButton.addEventListener('click', performSearch);
+    
+        // Trigger search on "Enter" key
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    });
 
-//transalate 
+    //transalate 
 
 function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
     }
 </script>
+    
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 

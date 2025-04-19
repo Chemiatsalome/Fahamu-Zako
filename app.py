@@ -32,7 +32,9 @@ app.register_blueprint(approutes_bp)
 app.register_blueprint(chat_bp, url_prefix="/chat")  # Register the blueprint
 
 # Use waitress to serve the app
-from waitress import serve
+# from waitress import serve
 
-if __name__ == "__main__":
-    serve(app, host='0.0.0.0', port=8000)
+# if __name__ == "__main__":
+#     serve(app, host='0.0.0.0', port=8000)
+if __name__ == '__main__':
+    app.run(debug=True)
