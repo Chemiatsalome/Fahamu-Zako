@@ -147,25 +147,28 @@ button.next {
 
 /* Modal Background */
 .modal {
-    display: none; 
+    display: none; /* or block, depending on toggle */
     position: fixed;
-    z-index: 1000; 
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content */
 .modal-content {
-    background-color: white;
-    margin: 15% auto; 
+    background-color: #fff;
+    margin: 5% auto;
     padding: 20px;
     border-radius: 8px;
-    width: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-height: 80vh; /* Limit height */
+    overflow-y: auto;  /* Enable vertical scroll */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+
 
 /* Close Button */
 .close {
@@ -263,9 +266,6 @@ footer {
                         <a class="nav-link" href="#about">About <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#mission">Mission</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#resources">Resources</a>
                     </li>
                     <li class="nav-item">
@@ -281,7 +281,7 @@ footer {
                         <a class="nav-link" href="{{ url_for('signup.signup') }}">Signup</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('approutes.legalSupport') }}">Learn</a>
+                        <a class="nav-link" href="{{ url_for('approutes.legalSupport') }}">AI Legal Companion</a>
                     </li>
                 </ul>
             </div>
@@ -408,18 +408,39 @@ footer {
                 <h2>Legal Documents</h2>
                 <p>Here are some important legal documents you can read:</p>
                 
-                <ul>
+                <ul style="list-style-type: none; padding-left: 0;">
                     <li>
                         <strong>ACPH (African Charter on Human and People's Rights)</strong>
                         <br>
-                        <a href="/static/legal_documents/ACPH.pdf" target="_blank">Open ACPH (PDF)</a>
+                        <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" target="_blank">Open ACPH (PDF)</a>
                     </li>
                     <li>
                         <strong>Kampala Convention (African Union Convention on IDPs)</strong>
                         <br>
-                        <a href="/static/legal_documents/Kampala_Convention.pdf" target="_blank">Open Kampala Convention (PDF)</a>
+                        <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" target="_blank">Open Kampala Convention (PDF)</a>
+                    </li>
+                    <li>
+                        <strong>AU Institutions</strong>
+                        <br>
+                        <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" target="_blank">Open AU Institutions (PDF)</a>
+                    </li>
+                    <li>
+                        <strong>Human Rights Strategy for Africa</strong>
+                        <br>
+                        <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" target="_blank">Open Human Rights Strategy for Africa (PDF)</a>
+                    </li>
+                    <li>
+                        <strong>Compendium of Key Human Rights Documents of the African Union</strong>
+                        <br>
+                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Compendium (PDF)</a>
+                    </li>
+                    <li>
+                        <strong>Making the Kampala Convention Work for IDPs</strong>
+                        <br>
+                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Making the Kampala Convention Work for IDPs (PDF)</a>
                     </li>
                 </ul>
+                
             </div>
         </div>
 
