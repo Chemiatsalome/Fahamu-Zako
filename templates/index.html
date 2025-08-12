@@ -1,580 +1,1326 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Human Rights Platform</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="icon" href="{{ url_for('static', filename='images/legalImage6.jpg') }}" type="image/x-icon"> 
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-        <!-- rest of your code -->
-   
-    
-    <style>
-/* General Styling */
-body {
-    font-family: 'Montserrat', sans-serif;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fahamu Haki Zako - Human Rights Platform</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <style>
+    /* Reset & general */
+    body,
+    html {
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        overflow-y: auto;   /* Allow vertical scroll */
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #faf3e0, #e9f5db);
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .custom-navbar {
+      background-color: #1f5b09 !important;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ffb703 !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: #faf3e0 !important;
+      font-weight: 600;
+      font-size: 1 rem;
+      margin-left: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #fb8500 !important;
+    }
+
+        /* Align translate widget horizontally, with some spacing */
+    .translate-box {
+    margin-left: 1rem;
+    color: #faf3e0; /* match nav link color */
+    display: flex;
+    align-items: center;
+    /* Optional: reduce font size to fit nicely */
+    font-size: 0.9rem;
+    }
+
+    /* Adjust the dropdown to look better in the navbar */
+    .translate-box select.goog-te-combo {
+    background-color: #1f5b09; /* navbar background */
+    color: #faf3e0;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    }
+
+    /* On hover, change color */
+    .translate-box select.goog-te-combo:hover {
+    color: #fb8500;
+    }
+
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('static/images/legalImage3.jpg') no-repeat center center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(31, 91, 9, 0.7);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+      padding: 0 20px;
+      animation: fadeInUp 1.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+        .hero-carousel {
+    position: relative;
+    height: 100vh;  /* full viewport height */
+    overflow: visible;
+    width: 100vw;   /* full viewport width */
+    margin: 0;      /* no margin */
+    padding: 0;     /* no padding */
+    }
+
+    /* If your navbar is fixed and 60px high, add this to avoid overlap */
+    /*
+    .hero-carousel {
+    padding-top: 60px;
+    height: calc(100vh - 60px);
+    }
+    */
+
+    .carousel-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #FAF3E0; /* Soft Warm Beige */
-    color: #333333; /* Deep Gray */
-}
+    }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.container h2 {
-    color: white;
-}
-
-.container p {
-    color: white;
-}
-
-
-
-/* Hero Section & Carousel */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.carousel {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.carousel-slide {
+    .carousel-slide {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
+    inset: 0;
     background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.carousel-slide.active {
-    opacity: 1;
-}
-.custom-navbar {
-    background-color: #1f5b09 !important;
-}
-
-
-.overlay {
-    background: rgba(18, 123, 20, 0.85); /* Soft Teal with Transparency */
-    padding: 20px;
-    border-radius: 10px;
-    color: #FAF3E0;
-    margin-top: 100px;
-}
-
-/* Navigation Buttons */
-button.prev, button.next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.4);
-    border: none;
-    color: #F77F00;
-    font-size: 30px;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 40px;
-}
-
-button.prev:hover, button.next:hover {
-    background: #FB8500;
-    color: #FAF3E0;
-}
-
-button.prev {
-    left: 10px;
-}
-
-button.next {
-    right: 10px;
-}
-
-/* Sections */
-.section {
-    padding: 80px 0;
-    background: #E9F5DB; /* Light Pastel Green */
-}
-
-.section h2 {
-    color: #F77F00; /* Sunset Orange */
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: #FFB703; /* Bright Amber */
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-
-.btn:hover {
-    background: #FB8500; /* Energetic Tangerine */
-    color: white;
-}
-/* Resources Section */
-#resources {
-    background-color: #FAF3E0; /* Soft Cream for a bright and warm feel */
-    padding: 80px 0;
     text-align: center;
-}
-
-/* Modal Background */
-.modal {
-    display: none; /* or block, depending on toggle */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
+    color: rgb(243, 247, 244);
+    padding: 0 20px;  /* Keep horizontal padding for content */
     height: 100%;
-    overflow: hidden;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-height: 80vh; /* Limit height */
-    overflow-y: auto;  /* Enable vertical scroll */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-
-/* Close Button */
-.close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.section.light {
-    background-color: #f4f4f4;
-    padding: 60px 0;
-    text-align: center;
-}
-
-.team-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.team-member {
-    width: 250px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-
-.team-member img {
     width: 100%;
-    height: auto;
-    border-radius: 50%;
+    }
+
+    .carousel-slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+    }
+
+    .carousel-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(75, 109, 69, 0.7);
+    z-index: 0;
+    }
+
+    .carousel-slide .hero-content {
+    position: relative;
+    max-width: 700px;
+    z-index: 1;
+    animation: fadeInUp 1.5s ease forwards;
+    margin-top: 0; /* ensure no unexpected margin here */
+    }
+   
+    .carousel-slide h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(251, 251, 251, 0.5);
+    }
+  
+    .carousel-slide p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
+    }
+  
+    /* Buttons same as before */
+    .btn-primary {
+      background-color: #ffb703;
+      border: none;
+      padding: 15px 50px;
+      font-size: 1.25rem;
+      border-radius: 50px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 12px rgba(255, 183, 3, 0.6);
+      display: inline-block;
+    }
+  
+    .btn-primary:hover {
+      background-color: #fb8500;
+      color: white;
+      box-shadow: 0 8px 16px rgba(251, 133, 0, 0.8);
+    }
+  
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    /* Carousel controls */
+    .carousel-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(31, 91, 9, 0.7);
+      color: #ffb703;
+      border: none;
+      font-size: 2.5rem;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+  
+    .carousel-control:hover {
+      background: #fb8500;
+      color: white;
+    }
+  
+    .carousel-control.prev {
+      left: 30px;
+    }
+  
+    .carousel-control.next {
+      right: 30px;
+    }
+  
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .carousel-slide h1 {
+        font-size: 2.4rem;
+      }
+  
+      .carousel-slide p {
+        font-size: 1.1rem;
+      }
+  
+      .btn-primary {
+        padding: 12px 35px;
+        font-size: 1rem;
+      }
+    }
+ 
+    .btn-primary {
+      background-color: #ffb703;
+      border: none;
+      padding: 15px 50px;
+      font-size: 1.25rem;
+      border-radius: 50px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 12px rgba(255, 183, 3, 0.6);
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background-color: #fb8500;
+      color: white;
+      box-shadow: 0 8px 16px rgba(251, 133, 0, 0.8);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Sections styling */
+    section {
+      padding: 80px 0;
+    }
+
+        /* Full width sections - background spans entire width */
+        .full-width-section {
+        width: 100vw;       /* full viewport width */
+        padding: 60px 20px; /* padding inside */
+        box-sizing: border-box;
+        }
+
+        /* Content inside full width sections is centered and constrained */
+        .full-width-section .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        }
+
+        /* Fixed width sections (like about, resources) */
+        .fixed-width-section {
+        max-width: 1000px;
+        margin: 60px auto;  /* vertical margin to separate from others */
+        padding: 60px 20px;
+        box-sizing: border-box;
+        border-radius: 12px;
+        background-color: #f9f9f9; /* or whichever background */
+        box-shadow: 0 2px 8px rgba(31, 91, 9, 0.1);
+        }
+
+
+    section h2 {
+      color: #f77f00;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 2.8rem;
+    }
+
+    section p {
+      font-size: 1.15rem;
+      color: #333;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    /* Team */
+    .team-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .team-member {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 260px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-member img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .team-member h3 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: #1f5b09;
+      font-weight: 700;
+    }
+
+    .team-member p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* Resources Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 60px 20px;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #f77f00;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #fb8500;
+    }
+
+    .modal ul {
+      list-style-type: none;
+      padding-left: 0;
+      font-size: 1rem;
+    }
+
+    .modal ul li {
+      margin-bottom: 18px;
+    }
+
+    .modal ul li a {
+      color: #1f5b09;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .modal ul li a:hover {
+      color: #fb8500;
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary, .btn {
+      background-color: #ffb703;
+      color: white;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary:hover, .btn:hover {
+      background-color: #fb8500;
+      color: white;
+      text-decoration: none;
+    }
+
+    #contact form {
+  margin-top: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.team-member h3 {
-    margin-top: 10px;
-    font-size: 20px;
+#contact input[type="text"],
+#contact input[type="email"],
+#contact textarea {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.team-member p {
-    color: #666;
+#contact input[type="text"]:focus,
+#contact input[type="email"]:focus,
+#contact textarea:focus {
+  outline: 2px solid #ffb703;
+  background-color: #faf3e0;
+}
+
+#contact button.btn {
+  align-self: center;
+  padding: 15px 50px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  background-color: #ffb703;
+  border: none;
+  color: #1f5b09;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(255, 183, 3, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+#contact button.btn:hover {
+  background-color: #fb8500;
+  color: white;
+  box-shadow: 0 8px 16px rgba(251, 133, 0, 0.8);
 }
 
 
+    /* Floating AI Companion Button */
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #fb8500;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(251, 133, 0, 0.6);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 9999;
+      font-size: 28px;
+    }
+
+    .floating-btn:hover {
+      background: #ffb703;
+    }
+
+    /* Tooltip */
+    .floating-btn[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 100%;
+      right: 50%;
+      transform: translateX(50%);
+      background-color: #1f5b09;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    /* Alternating background colors for major sections */
+#about {
+  background-color: #f9f9f9; /* very light grey */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(31, 91, 9, 0.1);
+  padding: 60px 20px;
+  margin-bottom: 60px;
+}
+
+#resources {
+  background-color: #ffffff; /* pure white */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(31, 91, 9, 0.1);
+  padding: 60px 20px;
+  margin-bottom: 60px;
+}
+
+#team {
+  background-color: #f0f7e8; /* soft greenish tint */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(31, 91, 9, 0.15);
+  padding: 60px 20px;
+  margin-bottom: 60px;
+}
 
 #aboutvideo {
-    background-color: #E9F5DB; /* Soft Cream for a bright and warm feel */
-    padding: 80px 0;
-    text-align: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 60px 20px;
+  margin-bottom: 60px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+#contact {
+  /* already has dark background */
+  padding: 80px 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  margin-top: 60px;
+}
+
+/* Consistent max-width and centering for content inside sections */
+section > .container,
+section > p {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Slightly increase heading letter spacing for clarity */
+section h2 {
+  letter-spacing: 0.05em;
+}
+
+/* Add subtle horizontal separator line before each section except first */
+section:not(:first-of-type) {
+  border-top: 3px solid #f77f00;
+  padding-top: 40px;
+}
+
+/* Make buttons consistent and spaced well */
+section .btn, section a.btn {
+  margin-top: 20px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .about-video {
-    width: 100%; /* Adjust width for responsiveness */
-    max-width: 1500px; /* Limits maximum size */
-    border-radius: 10px; /* Adds rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-    transition: transform 0.3s ease-in-out;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: block;
+  margin: 0 auto;
 }
-
-.about-video:hover {
-    transform: scale(1.02); /* Slight zoom effect on hover */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .about-video {
-        width: 95%; /* Slightly larger on smaller screens */
-    }
-}
-
 
 /* Footer */
 footer {
-    background: #1f5b09; /* Soft Teal */
-    padding: 20px 0;
-    text-align: center;
-    color: #FAF3E0;
+  background-color: #1f5b09;
+  color: #faf3e0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.25);
+  user-select: none;
 }
 
-    </style>
+footer a {
+  color: #ffb703;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #fb8500;
+  text-decoration: underline;
+}
+
+footer .footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+footer .footer-sponsor,
+footer .footer-partners {
+  flex: 1 1 250px;
+  text-align: center;
+}
+
+footer h3 {
+  color: #ffb703;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+footer .partners-logos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+footer .footer-logo {
+  max-height: 60px;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* invert colors for better contrast on dark bg */
+  transition: filter 0.3s ease;
+}
+
+footer .footer-logo:hover {
+  filter: brightness(1) invert(0);
+}
+
+footer .footer-copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 30px;
+  color: #faf3e0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer .footer-content {
+    flex-direction: column;
+  }
+
+  footer .footer-sponsor,
+  footer .footer-partners {
+    flex-basis: 100%;
+  }
+}
+
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.4rem;
+      }
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+      .team-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .team-member {
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 576px) {
+  .translate-box {
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
+}
+
+  </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-            <a class="navbar-brand" href="#">Human Rights Awareness</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#about">About <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#resources">Resources</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">Meet Our Team</a>
-                    </li>
-<!--                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('signup.signup') }}">Signup</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('approutes.legalSupport') }}">AI Legal Companion</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="google_translate_element" class="translate-box"></div>
-        </nav>
-    </header>
-    
-    
-    
-    
-    <section class="hero">
-        <div class="carousel">
-            <div class="carousel-slide active" src="static/images/legalImage3.jpg" style="background-image: url('static/images/legalImage3.jpg');">
-                <div class="overlay">
-                    <h2>Empowering Individuals</h2>
-                    <p>Providing access to human rights resources for advocacy and education.</p>
-                </div>
-            </div>
-            <div class="carousel-slide" src="static/images/legalImage4.jpg" style="background-image: url('static/images/legalImage4.jpg');">
-                <div class="overlay">
-                    <h2>Know Your Rights</h2>
-                    <p>Stay informed about your rights and how to protect them.</p>
-                </div>
-            </div>
-            <div class="carousel-slide" src="static/images/legalImage5.jpg" style="background-image: url('static/images/legalImage5.jpg');">
-                <div class="overlay">
-                    <h2>Join the Movement</h2>
-                    <p>Be a voice for change in your community.</p>
-                </div>
-            </div>
-            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+      <a class="navbar-brand" href="#">Fahamu Haki Zako</a>
+  
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navMenu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Put translate element here, BEFORE the collapsible menu -->
+      <div id="google_translate_element" class="translate-box"></div>
+  
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#resources">Legal Resources</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#team">Our Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{{ url_for('approutes.legalSupport') }}"
+              >AI Legal Companion</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+
+
+  <!-- Hero Carousel Section -->
+<section class="hero-carousel" role="banner" aria-label="Welcome banner carousel">
+    <div class="carousel-wrapper">
+      <div class="carousel-slide active" style="background-image: url('static/images/legalImage3.jpg')">
+        <div class="hero-content">
+          <h1>Fahamu Haki Zako</h1>
+          <p>Your AI-Powered Legal Companion for African Human Rights</p>
+          <a href="{{ url_for('approutes.legalSupport') }}" class="btn btn-primary">Meet Your AI Companion</a>
         </div>
-    </section>
-    
-    <section id="about" class="section">
-        <div class="container">
-            <h2>About</h2>
-            <p style="color: black;" >This platform is dedicated to promoting human rights by providing open access to essential documents, educational materials, and advocacy resources, all powered by cutting-edge technology. Developed by a skilled team of IT professionals led by Salome Monthe Chemiat, this initiative integrates digital solutions to enhance accessibility, engagement, and impact. Through AI-driven research tools, secure data repositories, and interactive learning modules, we empower individuals and organizations to drive meaningful change, raise awareness, and protect fundamental freedoms. Whether you're an activist, educator, or policymaker, our platform equips you with the technological resources and knowledge needed to create a more just and equitable society.</p>
+      </div>
+  
+      <div class="carousel-slide" src="static/images/legalImage4.jpg" style="background-image: url('static/images/legalImage4.jpg');">
+      
+        <div class="hero-content">
+          <h1>Empowering African Rights</h1>
+          <p>Get instant legal advice tailored for your context.</p>
+          <a href="#about" class="btn btn-primary">Learn More</a>
         </div>
-    </section>
-    
-    <section  style="background-image: url('static/images/legalImage4.jpg');" id="mission" class="section dark">
-        <div class="container">
-            <h2>Our Mission</h2>
-            <p >We strive to raise awareness about human rights issues and empower individuals through knowledge.</p>
+      </div>
+  
+      <div class="carousel-slide" src="static/images/legalImage5.jpg" style="background-image: url('static/images/legalImage5.jpg');">
+        
+        <div class="hero-content">
+          <h1>Justice at Your Fingertips</h1>
+          <p>Accessible, reliable, and AI-driven legal support.</p>
+          <a href="#resources" class="btn btn-primary">Explore Resources</a>
         </div>
-    </section>
+      </div>
+  
+      <!-- Carousel controls -->
+      <button class="carousel-control prev" aria-label="Previous slide">&#10094;</button>
+      <button class="carousel-control next" aria-label="Next slide">&#10095;</button>
+    </div>
+  </section>
+  
+  
+  
+  
 
-    <!-- Meet Our Team Section -->
-    <section id="team" class="section light">
-        <div class="container">
-            <h2>Meet Our Team</h2>
-            <p style="color: black;">Our dedicated team works tirelessly to come up with the best technology that can <br> educate and advocate for human rights.</p>
+  <!-- Floating AI Companion Button -->
+  <div
+  id="floatingBtn"
+  class="floating-btn"
+  title="Open AI Legal Companion"
+  role="button"
+  aria-label="Open AI Legal Companion"
+  tabindex="0"
+>
+  <i class="fas fa-robot"></i>
+</div>
 
-            <div class="team-container">
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team1.jpeg') }}"alt="Team Member 1">
-                    <h3>Salome Monthe Chemiat</h3>
-                    <p> <Strong>Lead Developer & Project Architect</Strong></p>
-                    <p> 
-                        Salome spearheaded the design and development of our web-based system. 
-                        <br>She also implemented AI capabilities using the Llama model .</p>
-                </div>
+<br>
+  <!-- About Section -->
+  <section class="fixed-width-section" id="about" aria-labelledby="about-title">
+    <h2 id="about-title">About Us</h2>
+    <p >
+      This platform is dedicated to promoting human rights by providing open
+      access to essential documents, educational materials, and advocacy
+      resources, all powered by cutting-edge technology. Developed by a skilled
+      team of IT professionals led by Salome Monthe Chemiat, this initiative
+      integrates digital solutions to enhance accessibility, engagement, and
+      impact. Through AI-driven research tools, secure data repositories, and
+      interactive learning modules, we empower individuals and organizations to
+      drive meaningful change, raise awareness, and protect fundamental
+      freedoms. Whether you're an activist, educator, or policymaker, our
+      platform equips you with the technological resources and knowledge needed
+      to create a more just and equitable society.
+    </p>
+  </section>
 
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team3.jpg') }}" alt="Dominic Mule">
-                    <h3>Dominic Mule</h3>
-                    <p> <strong> Software & AI Engineer </strong></p>
-                    <p>Dominic's expertise in AI and software engineering has been instrumental in building and optimizing our intelligent web-based system.</p>
-                </div>
-                
+  <!-- Resources Section -->
+  <section class="full-width-section" id="resources" aria-labelledby="resources-title">
+    <h2 id="resources-title">Legal Resources</h2>
+    <p>
+      Find essential guides, articles, and legal documents to support human
+      rights advocacy. Explore a curated collection of reports, policy briefs,
+      and educational materials designed to empower individuals and
+      organizations in promoting justice, equality, and human rights. Our
+      resources include best practices, case studies, and up-to-date legal
+      frameworks to help you stay informed and take meaningful action. Whether
+      you're a researcher, activist, or policymaker, you'll find valuable
+      insights to drive impactful change.
+    </p>
+    <button id="browseResourcesBtn" class="btn">Browse Resources</button>
 
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team2.jpeg') }}" alt="Beryl Apondi">
-                    <h3>Beryl Apondi</h3>
-                    <p> <Strong>Founder & CEO, Thinking BIH </Strong></p>
-                    <p>Beryl's leadership and data-driven approach have played a crucial role in building a strong foundation for our initiative.</p>
-                </div>
-                
+    <!-- Modal -->
+    <div id="resourcesModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+      <div class="modal-content">
+        <button class="close" aria-label="Close Modal">&times;</button>
+        <h2 id="modalTitle">Legal Documents</h2>
+        <p>Here are some important legal documents you can read:</p>
+        <ul>
+          <li>
+            <strong>ACPH (African Charter on Human and People's Rights)</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open ACPH (PDF)</a
+            >
+          </li>
+          <li>
+            <strong>Kampala Convention (African Union Convention on IDPs)</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open Kampala Convention (PDF)</a
+            >
+          </li>
+          <li>
+            <strong>AU Institutions</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open AU Institutions (PDF)</a
+            >
+          </li>
+          <li>
+            <strong>Human Rights Strategy for Africa</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open Human Rights Strategy for Africa (PDF)</a
+            >
+          </li>
+          <li>
+            <strong>Compendium of Key Human Rights Documents of the African Union</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open Compendium (PDF)</a
+            >
+          </li>
+          <li>
+            <strong>Making the Kampala Convention Work for IDPs</strong>
+            <br />
+            <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank" rel="noopener noreferrer"
+              >Open Making the Kampala Convention Work for IDPs (PDF)</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+   <!-- Meet Our Team Section -->
+   <section  id="team" class="section light">
+    <div class="container">
+        <h2>Meet Our Team</h2>
+        <p style="color: black;">Our dedicated team works tirelessly to come up with the best technology that can <br> educate and advocate for human rights.</p>
+
+        <div class="team-container">
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team1.jpeg') }}"alt="Team Member 1">
+                <h3>Salome Monthe Chemiat</h3>
+                <p> <Strong>Lead Developer & Project Architect</Strong></p>
+                <p> 
+                    Salome spearheaded the design and development of our web-based system. 
+                    <br>She also implemented AI capabilities using the Llama model .</p>
+            </div>
+
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team3.jpg') }}" alt="Dominic Mule">
+                <h3>Dominic Mule</h3>
+                <p> <strong> Software & AI Engineer </strong></p>
+                <p>Dominic's expertise in AI and software engineering has been instrumental in building and optimizing our intelligent web-based system.</p>
+            </div>
             
-                
 
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team5.jpg') }}" alt="Team Member 3">
-                    <h3>Victor Njogu</h3>
-                    <p> <strong>UI/UX Designer & Logistics Coordinator</strong></p>
-                    <p> 
-                        Victor played a key role in crafting the user experience, designing intuitive UI elements, and integrating engaging visuals like videos. 
-                        <br>He also managed team logistics, ensuring smooth collaboration and project execution."</p>
-                </div>
-
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team6.jpg') }}" alt="Victoria Rotich">
-                    <h3>Victoria Rotich</h3>
-                    <p> <strong> Development & Strategy Lead </strong></p>
-                    <p>With a passion for technology and innovation, Victoria has been instrumental in structuring our company’s foundation. 
-                        <br> From setting up our company profile to shaping our strategic direction, her dedication has helped lay the groundwork for our success.</p>
-                </div>
-
-                <div class="team-member">
-                    <img src="{{ url_for('static', filename='images/teamimages/team4.jpg') }}" alt="Brian Chacha">
-                    <h3>Brian Chacha</h3>
-                    <p> <strong>Data Scientist | Machine Learning Engineer </strong></p>
-                    <p>"Brian's expertise in AI and data science has been instrumental in enhancing our system's intelligence and performance."</p>
-                </div>
-                
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team2.jpeg') }}" alt="Beryl Apondi">
+                <h3>Beryl Apondi</h3>
+                <p> <Strong>Founder & CEO, Thinking BIH </Strong></p>
+                <p>Beryl's leadership and data-driven approach have played a crucial role in building a strong foundation for our initiative.</p>
             </div>
-        </div>
-    </section>
-    
-    <section id="resources" class="section">
-        <div class="container">
-            <h2>Resources</h2>
-            <p style="color: black;">Find essential guides, articles, and legal documents to support human rights advocacy.
-                Explore a curated collection of reports, policy briefs, and educational materials designed to empower individuals and organizations in promoting justice, equality, and human rights. Our resources include best practices, case studies, and up-to-date legal frameworks to help you stay informed and take meaningful action. Whether you're a researcher, activist, or policymaker, you'll find valuable insights to drive impactful change..</p>
-            <!-- Browse Resources Button -->
-            <a href="#" class="btn" id="browseResourcesBtn">Browse Resources</a>
+            
+        
+            
 
-            <!-- Modal Structure -->
-        <div id="resourcesModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Legal Documents</h2>
-                <p>Here are some important legal documents you can read:</p>
-                
-                <ul style="list-style-type: none; padding-left: 0;">
-                    <li>
-                        <strong>ACPH (African Charter on Human and People's Rights)</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" target="_blank">Open ACPH (PDF)</a>
-                    </li>
-                    <li>
-                        <strong>Kampala Convention (African Union Convention on IDPs)</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" target="_blank">Open Kampala Convention (PDF)</a>
-                    </li>
-                    <li>
-                        <strong>AU Institutions</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" target="_blank">Open AU Institutions (PDF)</a>
-                    </li>
-                    <li>
-                        <strong>Human Rights Strategy for Africa</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" target="_blank">Open Human Rights Strategy for Africa (PDF)</a>
-                    </li>
-                    <li>
-                        <strong>Compendium of Key Human Rights Documents of the African Union</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Compendium (PDF)</a>
-                    </li>
-                    <li>
-                        <strong>Making the Kampala Convention Work for IDPs</strong>
-                        <br>
-                        <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Making the Kampala Convention Work for IDPs (PDF)</a>
-                    </li>
-                </ul>
-                
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team5.jpg') }}" alt="Team Member 3">
+                <h3>Victor Njogu</h3>
+                <p> <strong>UI/UX Designer & Logistics Coordinator</strong></p>
+                <p> 
+                    Victor played a key role in crafting the user experience, designing intuitive UI elements, and integrating engaging visuals like videos. 
+                    <br>He also managed team logistics, ensuring smooth collaboration and project execution."</p>
             </div>
-        </div>
 
-        </div>
-    </section>
-    
-    <section id="aboutvideo" class="section">
-        <div class="container">
-            <video class="about-video" controls poster="{{ url_for('static', filename='images/legalImage5.jpg') }}">
-                <source src="{{ url_for('static', filename='images/aboutvideo.mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team6.jpg') }}" alt="Victoria Rotich">
+                <h3>Victoria Rotich</h3>
+                <p> <strong> Development & Strategy Lead </strong></p>
+                <p>With a passion for technology and innovation, Victoria has been instrumental in structuring our company’s foundation. 
+                    <br> From setting up our company profile to shaping our strategic direction, her dedication has helped lay the groundwork for our success.</p>
+            </div>
 
-    <section  style="background-image: url('static/images/legalImage4.jpg');" id="contact" class="section dark">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <p>Have questions? Want to get involved? Reach out to us.</p>
-            <a href="mailto:fahamuhakizako@gmail.com" class="btn">Email Us</a>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/teamimages/team4.jpg') }}" alt="Brian Chacha">
+                <h3>Brian Chacha</h3>
+                <p> <strong>Data Scientist | Machine Learning Engineer </strong></p>
+                <p>"Brian's expertise in AI and data science has been instrumental in enhancing our system's intelligence and performance."</p>
+            </div>
+            
         </div>
-    </section>
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Human Rights Awareness. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>
+</section>
 
+<section class="full-width-section" style="background-color: #1f5b09; color: #faf3e0;"  id="resources" class="section">
+    <div class="container">
+        <h2>Resources</h2>
+        <p style="color: black;">Find essential guides, articles, and legal documents to support human rights advocacy.
+            Explore a curated collection of reports, policy briefs, and educational materials designed to empower individuals and organizations in promoting justice, equality, and human rights. Our resources include best practices, case studies, and up-to-date legal frameworks to help you stay informed and take meaningful action. Whether you're a researcher, activist, or policymaker, you'll find valuable insights to drive impactful change..</p>
+        <!-- Browse Resources Button -->
+        <a href="#" class="btn" id="browseResourcesBtn">Browse Resources</a>
+
+        <!-- Modal Structure -->
+    <div id="resourcesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Legal Documents</h2>
+            <p>Here are some important legal documents you can read:</p>
+            
+            <ul style="list-style-type: none; padding-left: 0;">
+                <li>
+                    <strong>ACPH (African Charter on Human and People's Rights)</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" target="_blank">Open ACPH (PDF)</a>
+                </li>
+                <li>
+                    <strong>Kampala Convention (African Union Convention on IDPs)</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" target="_blank">Open Kampala Convention (PDF)</a>
+                </li>
+                <li>
+                    <strong>AU Institutions</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" target="_blank">Open AU Institutions (PDF)</a>
+                </li>
+                <li>
+                    <strong>Human Rights Strategy for Africa</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" target="_blank">Open Human Rights Strategy for Africa (PDF)</a>
+                </li>
+                <li>
+                    <strong>Compendium of Key Human Rights Documents of the African Union</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Compendium (PDF)</a>
+                </li>
+                <li>
+                    <strong>Making the Kampala Convention Work for IDPs</strong>
+                    <br>
+                    <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" target="_blank">Open Making the Kampala Convention Work for IDPs (PDF)</a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+
+    </div>
+</section>
+
+<section id="aboutvideo" class="section">
+    <div class="container">
+        <video class="about-video" controls poster="{{ url_for('static', filename='images/legalImage5.jpg') }}">
+            <source src="{{ url_for('static', filename='images/aboutvideo.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</section>
+
+<section style="background-image: url('static/images/legalImage4.jpg');" id="contact" class="section dark">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p style="color: #f8f9f7;">Have questions? Want to get involved? Reach out to us.</p>
+  
+      <form id="contactForm" action="https://formspree.io/f/xanbvjry" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+  
+<br>
+
+<footer>
+    <div class="container footer-content">
+  
+      <div class="footer-sponsor">
+        <h3>Soul Sponsor</h3>
+        <a href="https://magamaba.network" target="_blank" rel="noopener noreferrer" aria-label="Magamaba Network">
+          <img src="static/images/magamaba-logo.png" alt="Magamaba Network Logo" class="footer-logo" />
+        </a>
+      </div>
+  
+      <div class="footer-partners">
+        <h3>Partners</h3>
+        <div class="partners-logos">
+          <a href="https://partner1.example" target="_blank" rel="noopener noreferrer" aria-label="Partner 1">
+            <img src="static/images/partner1-logo.png" alt="Partner 1 Logo" class="footer-logo" />
+          </a>
+          <a href="https://partner2.example" target="_blank" rel="noopener noreferrer" aria-label="Partner 2">
+            <img src="static/images/partner2-logo.png" alt="Partner 2 Logo" class="footer-logo" />
+          </a>
+          <!-- Add more partners as needed -->
+        </div>
+      </div>
+  
+      <p class="footer-copy">&copy; 2025 Human Rights Awareness. All rights reserved.</p>
+  
+    </div>
+  </footer>
+  
+
+  <!-- Scripts -->
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJ+fsF5Y37jv0xtqIJcFhGkPMmkjy0Qf47lRM="
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9Kn/QxGHI1UWZ07hbI4eVuZ+FGdXnxBuxU3C"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVkF6tn/wQ5vWLDdGp"
+    crossorigin="anonymous"
+  ></script>
+
+  <script>
+    // Modal open/close logic
+    const modal = document.getElementById('resourcesModal');
+    const btn = document.getElementById('browseResourcesBtn');
+    const closeBtn = modal.querySelector('.close');
+
+    btn.addEventListener('click', () => {
+      modal.style.display = 'block';
+      modal.focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Accessibility: Close modal with ESC key
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.style.display === 'block') {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const url = "{{ url_for('approutes.legalSupport') }}";
+      const btn = document.getElementById('floatingBtn');
+  
+      btn.addEventListener('click', () => {
+        location.href = url;
+      });
+  
+      btn.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          location.href = url;
+        }
+      });
+    });
+  </script>
 
 <script>
-//Allows a smooth movement within the page
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("a[href^='#']").forEach(anchor => {
-        anchor.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent default anchor behavior
+    // Carousel logic
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+  
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      currentIndex = index;
+    }
+  
+    function nextSlide() {
+      let nextIndex = (currentIndex + 1) % totalSlides;
+      showSlide(nextIndex);
+    }
+  
+    function prevSlide() {
+      let prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(prevIndex);
+    }
+  
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      resetInterval();
+    });
+  
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      resetInterval();
+    });
+  
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 5000);
+    }
+  
+    function resetInterval() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+  
+    // Initialize
+    startAutoSlide();
+  </script>
 
-            const targetId = this.getAttribute("href"); 
-            const targetElement = document.querySelector(targetId);
+<script>
+    const form = document.getElementById('contactForm');
+  
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent default form submission
+  
+      const formData = new FormData(form);
+  
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          alert('Your form has been submitted successfully!');
+          form.reset();  // optional: reset form fields
+        } else {
+          alert('Oops! There was a problem submitting your form.');
+        }
+      }).catch(error => {
+        alert('Oops! There was a problem submitting your form.');
+      });
+    });
+    
+  </script>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-            if (targetElement) {
-                const headerOffset = 80; // Adjust this value based on your header height
-                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-                const offsetPosition = elementPosition - headerOffset;
+ <!-- Load Google Translate widget script -->
+ <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
+  <script>
+    // Map of country codes to local language codes for Google Translate
+    const countryLangMap = {
+      "KE": "sw",  // Kenya -> Swahili
+      "UG": "sw",  // Uganda -> Swahili
+      "TZ": "sw",  // Tanzania -> Swahili
+      "NG": "en",  // Nigeria -> English
+      "ZA": "en",  // South Africa -> English (could be others)
+      "FR": "fr",  // France -> French
+      "DE": "de",  // Germany -> German
+      "ES": "es",  // Spain -> Spanish
+      "CN": "zh-CN", // China -> Chinese Simplified
+      "JP": "ja",  // Japan -> Japanese
+      "RU": "ru",  // Russia -> Russian
+      "IN": "hi",  // India -> Hindi (also English common)
+      "EG": "ar",  // Egypt -> Arabic
+      // Add more as needed
+    };
+
+    // Detect user country and auto-translate
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const userCountry = data.country;
+        const targetLang = countryLangMap[userCountry] || 'en'; // default English if no mapping
+
+        // Wait for Google Translate widget to load the language dropdown
+        const waitForTranslate = setInterval(() => {
+          const combo = document.querySelector('.goog-te-combo');
+          if (combo) {
+            if (combo.value !== targetLang) {
+              combo.value = targetLang;
+              combo.dispatchEvent(new Event('change'));
             }
-        });
-    });
-});
-
-//Open Resource Modal 
-document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("resourcesModal");
-    const openBtn = document.getElementById("browseResourcesBtn");
-    const closeBtn = document.querySelector(".close");
-
-    // Open Modal
-    openBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        modal.style.display = "block";
-    });
-
-    // Close Modal
-    closeBtn.addEventListener("click", function () {
-        modal.style.display = "none";
-    });
-
-    // Close Modal on Clicking Outside
-    window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-});
-
-
-//Works on the couressel
-
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const totalSlides = slides.length;
-
-function showSlide(index) {
-    slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        if (i === index) {
-            slide.classList.add('active');
-        }
-    });
-}
-
-function moveSlide(direction) {
-    currentSlide += direction;
-    if (currentSlide < 0) {
-        currentSlide = totalSlides - 1;
-    } else if (currentSlide >= totalSlides) {
-        currentSlide = 0;
-    }
-    showSlide(currentSlide);
-}
-
-document.querySelector('.prev').addEventListener('click', () => moveSlide(-1));
-document.querySelector('.next').addEventListener('click', () => moveSlide(1));
-
-// Auto slide
-setInterval(() => moveSlide(1), 5000);
-
-// Initialize first slide
-showSlide(currentSlide);
-
-//transalate 
-
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-
- 
-
-
-</script>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+            clearInterval(waitForTranslate);
+          }
+        }, 500);
+      })
+      .catch(() => {
+        // On error, do nothing (keep English)
+        console.warn('Could not detect location for auto-translate.');
+      });
+  </script>
 
 
 </body>

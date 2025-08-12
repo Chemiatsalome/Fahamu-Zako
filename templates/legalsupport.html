@@ -13,19 +13,114 @@
         <!-- rest of your code -->
    
     <style>
-      /* General Styling */
-html, body {
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
-    scroll-behavior: smooth;
-    background-color: #FAF3E0;
-    color: #333;
-    margin: 0;
-    padding: 0;
+    body,
+    html {
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        overflow-y: auto;   /* Allow vertical scroll */
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #faf3e0, #e9f5db);
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .custom-navbar {
+      background-color: #1f5b09 !important;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ffb703 !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: #faf3e0 !important;
+      font-weight: 600;
+      font-size: 1 rem;
+      margin-left: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #fb8500 !important;
+    }
+
+        /* Align translate widget horizontally, with some spacing */
+    .translate-box {
+    margin-left: 1rem;
+    color: #faf3e0; /* match nav link color */
+    display: flex;
+    align-items: center;
+    /* Optional: reduce font size to fit nicely */
+    font-size: 0.9rem;
+    }
+
+    /* Adjust the dropdown to look better in the navbar */
+    .translate-box select.goog-te-combo {
+    background-color: #1f5b09; /* navbar background */
+    color: #faf3e0;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    }
+
+    /* On hover, change color */
+    .translate-box select.goog-te-combo:hover {
+    color: #fb8500;
+    }
+
+
+    #contact form {
+  margin-top: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.custom-navbar {
-    background-color: #1f5b09 !important;
+#contact input[type="text"],
+#contact input[type="email"],
+#contact textarea {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#contact input[type="text"]:focus,
+#contact input[type="email"]:focus,
+#contact textarea:focus {
+  outline: 2px solid #ffb703;
+  background-color: #faf3e0;
+}
+
+#contact button.btn {
+  align-self: center;
+  padding: 15px 50px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  background-color: #ffb703;
+  border: none;
+  color: #1f5b09;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(255, 183, 3, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+#contact button.btn:hover {
+  background-color: #fb8500;
+  color: white;
+  box-shadow: 0 8px 16px rgba(251, 133, 0, 0.8);
 }
 
 
@@ -148,17 +243,100 @@ html, body {
 
 /* Footer */
 
+/* Footer */
 footer {
-    background: #1f5b09;
-    text-align: center;
-    color: #FAF3E0;
-    padding: 20px;
-    font-size: 1rem;
-    width: 100%;
-    position: relative;
-    left: 0;
-    bottom: 0;
-    margin-top: 20px;
+  background-color: #1f5b09;
+  color: #faf3e0;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.25);
+  user-select: none;
+}
+
+footer a {
+  color: #ffb703;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #fb8500;
+  text-decoration: underline;
+}
+
+footer .footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+footer .footer-sponsor,
+footer .footer-partners {
+  flex: 1 1 250px;
+  text-align: center;
+}
+
+footer h3 {
+  color: #ffb703;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+footer .partners-logos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+footer .footer-logo {
+  max-height: 60px;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* invert colors for better contrast on dark bg */
+  transition: filter 0.3s ease;
+}
+
+footer .footer-logo:hover {
+  filter: brightness(1) invert(0);
+}
+
+footer .footer-copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 30px;
+  color: #faf3e0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer .footer-content {
+    flex-direction: column;
+  }
+
+  footer .footer-sponsor,
+  footer .footer-partners {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .translate-box {
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
 }
 
 
@@ -343,13 +521,13 @@ footer {
                                     <i class="fas fa-chalkboard-teacher fa-3x"></i>
                                     <p>Visual Teacher</p>
                                 </button>
-                            </div> -->
-                            <!-- <div class="col-md-4">
+                            </div> 
+                            <div class="col-md-4">
                                 <button class="btn btn-link" onclick="selectTutor('audio')">
                                     <i class="fas fa-podcast fa-3x"></i>
                                     <p>Podcast Tutor</p>
                                 </button>
-                            </div> -->
+                            </div>  -->
                             
                         </div>
                     </div>
@@ -418,10 +596,33 @@ footer {
   
 <!-- Footer -->
 <footer>
-    <div class="container">
-        <p>&copy; 2025 Human Rights Awareness. All rights reserved.</p>
+    <div class="container footer-content">
+  
+      <div class="footer-sponsor">
+        <h3>Soul Sponsor</h3>
+        <a href="https://magamaba.network" target="_blank" rel="noopener noreferrer" aria-label="Magamaba Network">
+          <img src="static/images/magamaba-logo.png" alt="Magamaba Network Logo" class="footer-logo" />
+        </a>
+      </div>
+  
+      <div class="footer-partners">
+        <h3>Partners</h3>
+        <div class="partners-logos">
+          <a href="https://partner1.example" target="_blank" rel="noopener noreferrer" aria-label="Partner 1">
+            <img src="static/images/partner1-logo.png" alt="Partner 1 Logo" class="footer-logo" />
+          </a>
+          <a href="https://partner2.example" target="_blank" rel="noopener noreferrer" aria-label="Partner 2">
+            <img src="static/images/partner2-logo.png" alt="Partner 2 Logo" class="footer-logo" />
+          </a>
+          <!-- Add more partners as needed -->
+        </div>
+      </div>
+  
+      <p class="footer-copy">&copy; 2025 Human Rights Awareness. All rights reserved.</p>
+  
     </div>
-</footer>
+  </footer>
+  
 
 
 <!-- jQuery, Popper.js, and Bootstrap JS -->
@@ -505,46 +706,51 @@ $(document).ready(function() {
     };
 
     function summarize() {
-        if (selectedMethod && selectedDocument) {
-            $.ajax({
-                url: "http://127.0.0.1:5000/chat/summarize",
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ 
-                    document_name: selectedDocument,  // Pass document name
-                    delivery_method: selectedMethod,
-                    language: selectedLanguage
-                }),
-                success: function(data) {
-                    console.log(data); // Debugging
+    if (selectedMethod && selectedDocument) {
+        $.ajax({
+            url: "http://127.0.0.1:8000/chat/summarize",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                document_name: selectedDocument,
+                delivery_method: selectedMethod,
+                language: selectedLanguage
+            }),
+            success: function(data) {
+                console.log(data);
 
-                    if (selectedMethod === "video" && data.video_url) {
-                        $('#summaryResult').html(`
-                            <video controls width="400">
-                                <source src="${data.video_url}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `);
-                    } else if (selectedMethod === "audio") {
-                        $('#summaryResult').html(`
-                            <audio controls>
-                                <source src="/audio/summary_audio.mp3" type="audio/mp3">
-                                Your browser does not support the audio tag.
-                            </audio>
-                        `);
-                    } else {
-                        $('#summaryResult').html(data.summary || data.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                    $('#summaryResult').text("An error occurred while processing your request.");
+                if (selectedMethod === "video" && data.video_url) {
+                    $('#summaryResult').html(`
+                        <video controls width="400">
+                            <source src="${data.video_url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `);
+                } else if (selectedMethod === "audio" && data.audio_url) {
+                    $('#summaryResult').html(`
+                        <audio controls>
+                            <source src="${data.audio_url}" type="audio/mp3">
+                            Your browser does not support the audio tag.
+                        </audio>
+                    `);
+                } else if (data.summary) {
+                    $('#summaryResult').html(data.summary);
+                } else if (data.error) {
+                    $('#summaryResult').text(data.error);
+                } else {
+                    $('#summaryResult').text("No data received.");
                 }
-            });
-        } else {
-            console.warn("No document selected!");
-        }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                console.error("Response text:", xhr.responseText);
+                $('#summaryResult').text("An error occurred while processing your request.");
+            }
+        });
+    } else {
+        console.warn("No document or method selected!");
     }
+}
 });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -579,13 +785,60 @@ $(document).ready(function() {
 
     //transalate 
 
-function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
+
 </script>
     
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+ <!-- Load Google Translate widget script -->
+ <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+  <script>
+    // Map of country codes to local language codes for Google Translate
+    const countryLangMap = {
+      "KE": "sw",  // Kenya -> Swahili
+      "UG": "sw",  // Uganda -> Swahili
+      "TZ": "sw",  // Tanzania -> Swahili
+      "NG": "en",  // Nigeria -> English
+      "ZA": "en",  // South Africa -> English (could be others)
+      "FR": "fr",  // France -> French
+      "DE": "de",  // Germany -> German
+      "ES": "es",  // Spain -> Spanish
+      "CN": "zh-CN", // China -> Chinese Simplified
+      "JP": "ja",  // Japan -> Japanese
+      "RU": "ru",  // Russia -> Russian
+      "IN": "hi",  // India -> Hindi (also English common)
+      "EG": "ar",  // Egypt -> Arabic
+      // Add more as needed
+    };
+
+    // Detect user country and auto-translate
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const userCountry = data.country;
+        const targetLang = countryLangMap[userCountry] || 'en'; // default English if no mapping
+
+        // Wait for Google Translate widget to load the language dropdown
+        const waitForTranslate = setInterval(() => {
+          const combo = document.querySelector('.goog-te-combo');
+          if (combo) {
+            if (combo.value !== targetLang) {
+              combo.value = targetLang;
+              combo.dispatchEvent(new Event('change'));
+            }
+            clearInterval(waitForTranslate);
+          }
+        }, 500);
+      })
+      .catch(() => {
+        // On error, do nothing (keep English)
+        console.warn('Could not detect location for auto-translate.');
+      });
+  </script>
 
 
 </body>
