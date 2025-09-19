@@ -12,6 +12,8 @@ app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
 app.config.from_object('config.Config')
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 db.init_app(app)
 migrate = Migrate(app, db)

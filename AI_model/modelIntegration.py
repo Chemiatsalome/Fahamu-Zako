@@ -41,7 +41,7 @@ def get_summary_persona(delivery_method, pdf_text):
 
     if delivery_method in ["text", "visual"]:
         response = client.chat.completions.create(
-            model="meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
+            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
             messages=[
                 {"role": "system", "content": prompt},
                 {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
@@ -173,10 +173,11 @@ def summarize_pdf():
 
 @chat_bp.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('message')
+    data = request.get_json(silent=True) or {}
+    user_message = data.get('message')
 
-    if not user_message:
-        return jsonify({"error": "No message provided."}), 400
+    if not isinstance(user_message, str) or not user_message.strip():
+        return jsonify({"error": "No message provided. Send JSON { 'message': '...' }."}), 400
 
     try:
         user_language = detect(user_message)
@@ -230,18 +231,74 @@ def chat():
         Instead, say: "Based on human rights frameworks, here’s what you need to know…"
         """
 
-    response = client.chat.completions.create(
-        model="meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message}
-        ],
-        max_tokens=512,
-        temperature=0.7
-    )
+    try:
+        response = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            max_tokens=512,
+            temperature=0.7
+        )
+    except Exception as e:
+        return jsonify({"error": "Upstream model error", "details": str(e)}), 502
 
     if response and response.choices:
         bot_reply = response.choices[0].message.content
         return jsonify({"reply": bot_reply}), 200
 
     return jsonify({"reply": "I'm sorry, I couldn't process that. Could you rephrase?"}), 500
+
+@chat_bp.route("/upload-summarize", methods=["POST"])
+def upload_summarize():
+    uploaded_file = request.files.get("file")
+    delivery_method = request.form.get("delivery_method", "text")
+
+    if not uploaded_file:
+        return jsonify({"error": "No file uploaded."}), 400
+
+    # Handle PDF
+    if uploaded_file.filename.endswith(".pdf"):
+        pdf_reader = PyPDF2.PdfReader(uploaded_file)
+        pdf_text = ''
+        for page in pdf_reader.pages:
+            text = page.extract_text()
+            if text:
+                pdf_text += text + '\n'
+        if not pdf_text.strip():
+            return jsonify({"error": "No text found in the PDF."}), 400
+        text_to_summarize = pdf_text
+
+    # You can add DOCX/TXT handling here
+    elif uploaded_file.filename.endswith(".docx"):
+        from docx import Document
+        doc = Document(uploaded_file)
+        text_to_summarize = '\n'.join([p.text for p in doc.paragraphs if p.text.strip()])
+        if not text_to_summarize.strip():
+            return jsonify({"error": "No text found in DOCX."}), 400
+    elif uploaded_file.filename.endswith(".txt"):
+        text_to_summarize = uploaded_file.read().decode('utf-8')
+    else:
+        return jsonify({"error": "Unsupported file type."}), 400
+
+    # Generate summary
+    summary = get_summary_persona(delivery_method, text_to_summarize)
+    if not summary:
+        return jsonify({"error": "No summary generated."}), 500
+
+    if delivery_method == "audio":
+        audio_path = os.path.join(AUDIO_DIRECTORY, "temp_summary_audio.mp3")
+        success = generate_audio(summary, audio_path)
+        if not success:
+            return jsonify({"error": "Audio generation failed."}), 500
+        audio_url = f"/static/audio/temp_summary_audio.mp3"
+        return jsonify({"audio_url": audio_url}), 200
+
+    elif delivery_method == "video":
+        video_path = generate_video(summary)
+        video_url = f"/static/video/{os.path.basename(video_path)}"
+        return jsonify({"video_url": video_url}), 200
+
+    else:  # text
+        return jsonify({"summary": summary}), 200

@@ -44,6 +44,7 @@ Pygments==2.19.1
 PyPDF2==3.0.1
 pyttsx3==2.90
 python-dotenv==1.1.0
+python-docx==1.1.2
 requests==2.32.3
 rich==13.9.4
 shellingham==1.5.4
