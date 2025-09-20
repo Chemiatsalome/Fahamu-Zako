@@ -1,2618 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Human Rights Platform</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="icon" href="{{ url_for('static', filename='images/legalImage6.jpg') }}" type="image/x-icon"> 
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-        <!-- rest of your code -->
-   
-    <style>
-    :root {
-        --primary-color: #1f5b09;
-        --secondary-color: #ffb703;
-        --accent-color: #fb8500;
-        --light-bg: #faf3e0;
-        --card-bg: #ffffff;
-        --text-dark: #2c3e50;
-        --text-light: #6c757d;
-        --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
-        --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
-        --shadow-heavy: 0 8px 30px rgba(0,0,0,0.2);
-        --border-radius: 12px;
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body,
-    html {
-        overflow-x: hidden;
-        overflow-y: auto;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        font-family: 'Montserrat', sans-serif;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-        color: var(--text-dark);
-        scroll-behavior: smooth;
-        line-height: 1.6;
-    }
-
-    /* Navbar */
-    .custom-navbar {
-        background: #f5f4de !important;
-        backdrop-filter: blur(10px);
-        transition: var(--transition);
-    }
-
-    .navbar-brand {
-        font-weight: 700;
-        font-size: 1.8rem;
-        color: var(--secondary-color) !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        transition: var(--transition);
-    }
-
-    .navbar-brand:hover {
-        transform: scale(1.05);
-        color: var(--accent-color) !important;
-    }
-
-    .navbar-nav .nav-link {
-        color: #E76F51 !important;
-        font-weight: 600;
-        font-size: 1rem;
-        margin-left: 1rem;
-        padding: 0.5rem 1rem !important;
-        border-radius: 25px;
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .navbar-nav .nav-link::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .navbar-nav .nav-link:hover::before {
-        left: 100%;
-    }
-
-    .navbar-nav .nav-link:hover {
-        color: var(--secondary-color) !important;
-        background: rgba(255,255,255,0.1);
-        transform: translateY(-2px);
-    }
-
-navbar-toggler {
-  padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
-  font-size: var(--bs-navbar-toggler-font-size);
-  line-height: 1;
-  color: var(--bs-navbar-color);
-  background-color: transparent;
-  border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
-  border-radius: var(--bs-navbar-toggler-border-radius);
-  transition: var(--bs-navbar-toggler-transition);
-}
-
-
-        /* Align translate widget horizontally, with some spacing */
-    .translate-box {
-    margin-left: 1rem;
-    color: #faf3e0; /* match nav link color */
-    display: flex;
-    align-items: center;
-    /* Optional: reduce font size to fit nicely */
-    font-size: 0.9rem;
-    }
-
-    /* Adjust the dropdown to look better in the navbar */
-    .translate-box select.goog-te-combo {
-    background-color: #1f5b09; /* navbar background */
-    color: #faf3e0;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    }
-
-    /* On hover, change color */
-    .translate-box select.goog-te-combo:hover {
-    color: #fb8500;
-    }
-
-
-    #contact form {
-  margin-top: 30px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-#contact input[type="text"],
-#contact input[type="email"],
-#contact textarea {
-  padding: 12px 15px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-}
-
-#contact input[type="text"]:focus,
-#contact input[type="email"]:focus,
-#contact textarea:focus {
-  outline: 2px solid #ffb703;
-  background-color: #faf3e0;
-}
-
-#contact button.btn {
-  align-self: center;
-  padding: 15px 50px;
-  font-size: 1.1rem;
-  border-radius: 50px;
-  background-color: #ffb703;
-  border: none;
-  color: #1f5b09;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(255, 183, 3, 0.7);
-  transition: background-color 0.3s ease;
-}
-
-#contact button.btn:hover {
-  background-color: #fb8500;
-  color: white;
-  box-shadow: 0 8px 16px rgba(251, 133, 0, 0.8);
-}
-
-
-/* Hero Section */
-.hero-section {
-    position: relative;
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(135deg, #24531d 0%, #9ba24b 100%);
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.hero-shapes {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.shape {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: float 6s ease-in-out infinite;
-}
-
-.shape-1 {
-    width: 200px;
-    height: 200px;
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.shape-2 {
-    width: 150px;
-    height: 150px;
-    top: 60%;
-    right: 15%;
-    animation-delay: 2s;
-}
-
-.shape-3 {
-    width: 100px;
-    height: 100px;
-    bottom: 20%;
-    left: 20%;
-    animation-delay: 4s;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 2;
-}
-
-.highlight {
-    background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.hero-subtitle {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-actions {
-    position: relative;
-    z-index: 2;
-}
-
-/* Search Section */
-.search-section {
-    background: var(--card-bg);
-    border-bottom: 1px solid #e9ecef;
-}
-
-.search-container {
-    position: relative;
-}
-
-.search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 50px;
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-.search-box:focus-within {
-    box-shadow: 0 0 0 3px rgba(31, 91, 9, 0.1);
-    transform: translateY(-2px);
-}
-
-.search-icon {
-    position: absolute;
-    left: 20px;
-    color: var(--text-light);
-    font-size: 1.1rem;
-    z-index: 2;
-}
-
-.search-input {
-    flex: 1;
-    border: none;
-    padding: 20px 20px 20px 60px;
-    font-size: 1.1rem;
-    outline: none;
-    background: transparent;
-}
-
-.search-input::placeholder {
-    color: var(--text-light);
-}
-
-.search-btn {
-    background: linear-gradient(45deg, var(--primary-color), #2d6a4f);
-    border: none;
-    color: white;
-    padding: 20px 30px;
-    font-size: 1.1rem;
-    transition: var(--transition);
-    cursor: pointer;
-}
-
-.search-btn:hover {
-    background: linear-gradient(45deg, #2d6a4f, var(--primary-color));
-    transform: scale(1.05);
-}
-
-/* Upload Section */
-.upload-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-top: 1px solid #dee2e6;
-}
-
-.upload-container {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--shadow-medium);
-    border: 1px solid #e9ecef;
-}
-
-.upload-title {
-    color: var(--text-dark);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.upload-subtitle {
-    color: var(--text-light);
-    font-size: 1rem;
-    margin-bottom: 0;
-}
-
-.upload-area {
-    border: 3px dashed #dee2e6;
-    border-radius: var(--border-radius);
-    padding: 3rem 2rem;
-    text-align: center;
-    transition: var(--transition);
-    cursor: pointer;
-    position: relative;
-    background: #fafbfc;
-}
-
-.upload-area:hover {
-    border-color: var(--primary-color);
-    background: rgba(31, 91, 9, 0.05);
-    transform: translateY(-2px);
-}
-
-.upload-area.dragover {
-    border-color: var(--secondary-color);
-    background: rgba(255, 183, 3, 0.1);
-    transform: scale(1.02);
-}
-
-.upload-content {
-    pointer-events: none;
-}
-
-.upload-icon {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    opacity: 0.7;
-    transition: var(--transition);
-}
-
-.upload-area:hover .upload-icon {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.upload-text {
-    color: var(--text-dark);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.upload-hint {
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
-}
-
-.supported-formats {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.format-tag {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.upload-progress {
-    margin-top: 1rem;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: #e9ecef;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 4px;
-}
-
-.progress-text {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin: 0;
-    text-align: center;
-}
-
-.upload-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.translation-result {
-    background: #f8f9fa;
-    border-radius: var(--border-radius);
-    border: 1px solid #e9ecef;
-    overflow: hidden;
-}
-
-.result-header {
-    background: var(--primary-color);
-    color: white;
-    padding: 1rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.result-header h5 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.result-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.result-content {
-    padding: 1.5rem;
-    max-height: 400px;
-    overflow-y: auto;
-    background: white;
-    line-height: 1.6;
-    color: var(--text-dark);
-}
-
-.file-info {
-    background: #e9ecef;
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.file-icon {
-    font-size: 2rem;
-    color: var(--primary-color);
-}
-
-.file-details h6 {
-    margin: 0;
-    color: var(--text-dark);
-    font-weight: 600;
-}
-
-.file-details p {
-    margin: 0;
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-/* Modal Upload Styles */
-.upload-section-modal {
-    border: 1px solid #e9ecef;
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    background: #f8f9fa;
-}
-
-.upload-area-modal {
-    border: 2px dashed #dee2e6;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    text-align: center;
-    transition: var(--transition);
-    cursor: pointer;
-    background: white;
-}
-
-.upload-area-modal:hover {
-    border-color: var(--primary-color);
-    background: rgba(31, 91, 9, 0.05);
-}
-
-.upload-area-modal.dragover {
-    border-color: var(--secondary-color);
-    background: rgba(255, 183, 3, 0.1);
-}
-
-.upload-content-modal {
-    pointer-events: none;
-}
-
-.upload-icon-modal {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
-}
-
-.upload-text-modal {
-    color: var(--text-dark);
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-}
-
-.upload-hint-modal {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-.supported-formats-modal {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.format-tag-modal {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.file-info-modal {
-    background: white;
-    border: 1px solid #e9ecef;
-    border-radius: var(--border-radius);
-    padding: 1rem;
-    margin-top: 1rem;
-}
-
-.file-preview {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.file-icon-modal {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.file-details-modal h6 {
-    margin: 0;
-    color: var(--text-dark);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.file-details-modal p {
-    margin: 0;
-    color: var(--text-light);
-    font-size: 0.8rem;
-}
-
-.document-details-section {
-    background: white;
-    border: 1px solid #e9ecef;
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-}
-
-.ai-options-section {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-}
-
-.progress-section {
-    background: white;
-    border: 1px solid #e9ecef;
-    border-radius: var(--border-radius);
-    padding: 1rem;
-}
-
-.progress-text-modal {
-    margin: 0.5rem 0 0 0;
-    color: var(--text-light);
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-/* Documents Section */
-.documents-section {
-    background: #f8f9fa;
-}
-
-/* Card Styles */
-.card {
-    border: none;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    box-shadow: var(--shadow-light);
-    background: var(--card-bg);
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 2rem;
-}
-
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-}
-
-.card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-heavy);
-}
-
-.card-body {
-    padding: 2rem;
-    text-align: center;
-}
-
-.card-title {
-    font-weight: 700;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-    line-height: 1.4;
-}
-
-.card-text {
-    color: var(--text-light);
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.card-icon {
-    text-align: center;
-    color: var(--primary-color);
-    opacity: 0.8;
-    transition: var(--transition);
-}
-
-.card:hover .card-icon {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.card-actions {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.card-actions .btn {
-    flex: 1;
-    min-width: 120px;
-    font-size: 0.9rem;
-    padding: 10px 16px;
-}
-
-.card-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.card-text {
-    color: #555;
-    font-size: 1rem;
-}
-
-.card {
-    transition: all 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-    .card {
-        margin-bottom: 20px;
-    }
-}
-
-/* Buttons */
-.btn {
-    padding: 12px 24px;
-    font-weight: 600;
-    border-radius: 25px;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.btn:hover::before {
-    left: 100%;
-}
-
-.btn-success {
-    background: linear-gradient(45deg, #2D6A4F, #27ae60);
-    color: white;
-    box-shadow: var(--shadow-light);
-}
-
-.btn-success:hover {
-    background: linear-gradient(45deg, #1B4332, #2D6A4F);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-.btn-info {
-    background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-    color: white;
-    box-shadow: var(--shadow-light);
-}
-
-.btn-info:hover {
-    background: linear-gradient(45deg, var(--accent-color), #e67e22);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, var(--primary-color), #2d6a4f);
-    color: white;
-    box-shadow: var(--shadow-light);
-}
-
-.btn-primary:hover {
-    background: linear-gradient(45deg, #2d6a4f, var(--primary-color));
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-.btn-outline-primary {
-    background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-    background: var(--primary-color);
-    color: white;
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-}
-
-.btn-brown {
-    background: linear-gradient(45deg, #dd9502, #8B4513);
-    color: white;
-    box-shadow: var(--shadow-light);
-}
-
-.btn-brown:hover {
-    background: linear-gradient(45deg, #dd9502, #8B4513);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-.btn-red {
-    background: linear-gradient(45deg, #dc3545, #c82333);
-    color: white;
-    box-shadow: var(--shadow-light);
-}
-
-.btn-red:hover {
-    background: linear-gradient(45deg, #c82333, #dc3545);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-/* Modals */
-.modal-header {
-    background-color: #1f5b09;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-}
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.modal-body {
-    text-align: center;
-    padding: 20px;
-}
-
-/* Chatbot Interface */
-#chatbotInterface {
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-    opacity: 0;
-}
-
-.animate-fade-in-up.delay-1 {
-    animation-delay: 0.2s;
-}
-
-.animate-fade-in-up.delay-2 {
-    animation-delay: 0.4s;
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-    opacity: 0;
-}
-
-.animate-slide-in-left {
-    animation: slideInLeft 0.6s ease-out forwards;
-    opacity: 0;
-}
-
-.animate-slide-in-right {
-    animation: slideInRight 0.6s ease-out forwards;
-    opacity: 0;
-}
-
-/* Loading States */
-.loading {
-    position: relative;
-    overflow: hidden;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 992px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahamu Haki Zako - Know Your Rights</title>
     
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    .card-body {
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-section {
-        min-height: 60vh;
-        padding: 2rem 0;
-    }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    .hero-title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    .hero-subtitle {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vibrant-main.css') }}">
     
-    .hero-actions {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .hero-actions .btn {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .search-input {
-        padding: 15px 15px 15px 50px;
-        font-size: 1rem;
-    }
-    
-    .search-btn {
-        padding: 15px 25px;
-        font-size: 1rem;
-    }
-    
-    .card-body {
-        padding: 1.5rem;
-    }
-    
-    .card-title {
-        font-size: 1.1rem;
-    }
-    
-    .card-text {
-        font-size: 0.9rem;
-    }
-    
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .shape-1, .shape-2, .shape-3 {
-        display: none;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .search-box {
-        border-radius: 25px;
-    }
-    
-    .search-input {
-        padding: 12px 12px 12px 45px;
-        font-size: 0.9rem;
-    }
-    
-    .search-btn {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .card-body {
-        padding: 1rem;
-    }
-    
-    .btn {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Footer */
-
-/* Footer */
-footer {
-  background-color: #2c5033;
-  color: #faf3e0;
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  box-shadow: inset 0 5px 20px rgba(0,0,0,0.25);
-  user-select: none;
-}
-
-footer a {
-  color: #ffb703;
-  font-weight: 700;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-footer a:hover {
-  color: #fb8500;
-  text-decoration: underline;
-}
-
-footer .footer-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-}
-
-footer .footer-sponsor,
-footer .footer-partners {
-  flex: 1 1 250px;
-  text-align: center;
-}
-
-footer h3 {
-  color: #ffb703;
-  font-weight: 700;
-  margin-bottom: 15px;
-  font-size: 1.3rem;
-}
-
-footer .partners-logos {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-footer .footer-logo {
-  max-height: 60px;
-  max-width: 140px;
-  object-fit: contain;
-  filter: brightness(0) invert(1); /* invert colors for better contrast on dark bg */
-  transition: filter 0.3s ease;
-}
-
-footer .footer-logo:hover {
-  filter: brightness(1) invert(0);
-}
-
-footer .footer-copy {
-  flex-basis: 100%;
-  text-align: center;
-  margin-top: 30px;
-  color: #faf3e0;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  user-select: none;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  footer .footer-content {
-    flex-direction: column;
-  }
-
-  footer .footer-sponsor,
-  footer .footer-partners {
-    flex-basis: 100%;
-  }
-}
-
-@media (max-width: 576px) {
-  .translate-box {
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-  }
-}
-
-
-    </style>
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/legalImage6.jpg') }}" type="image/x-icon">
 </head>
 <body>
-
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-            <a class="navbar-brand" href="{{ url_for('approutes.index') }}">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
                 <i class="fas fa-balance-scale me-2"></i>
                 Fahamu Haki Zako
             </a>
-            <button  style="color: #1d1c1b;"  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span style="color: #1d1c1b;" class="navbar-toggler-icon"></span>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    
-
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('approutes.index') }}">Home</a>
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('approutes.legalSupport') }}">Legal Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
-            <div id="google_translate_element" class="translate-box"></div>
-        </nav>
-    </header>
-    
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-background">
-            <div class="hero-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-            </div>
         </div>
-        <div class="container">
-            <div class="row align-items-center min-vh-50">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="hero-title animate-fade-in-up">
-                        <span class="highlight">Legal Support</span> & Human Rights Resources
-                    </h1>
-                    <p class="hero-subtitle animate-fade-in-up delay-1">
-                        Access comprehensive legal documents, AI-powered assistance, and expert guidance 
-                        to understand your rights and navigate legal challenges.
-                    </p>
-                    <div class="hero-actions animate-fade-in-up delay-2">
-                        <button class="btn btn-primary btn-lg me-3" data-toggle="modal" data-target="#chatbotModal">
-                            <i class="fas fa-robot me-2"></i>Chat with AI
-                        </button>
-                        <button class="btn btn-outline-primary btn-lg" onclick="scrollToDocuments()">
-                            <i class="fas fa-search me-2"></i>Browse Documents
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </nav>
 
-    <!-- Search Section -->
-    <section class="search-section py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="search-container">
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" class="search-input" placeholder="Search for legal documents, rights, or topics...">
-                            <button class="search-btn" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel" role="banner" aria-label="Welcome banner carousel">
+        <div class="carousel-wrapper">
+            <div class="carousel-slide active" style="background-image: url('static/images/legalImage3.jpg')">
+                <div class="hero-content">
+                    <h1>Fahamu Haki Zako</h1>
+                    <p>Your AI-Powered Legal Companion for African Human Rights</p>
+                    <a href="{{ url_for('approutes.legalSupport') }}" class="btn btn-primary">Meet Your AI Companion</a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- File Upload Section -->
-    <section class="upload-section py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="upload-container">
-                        <div class="upload-header text-center mb-4">
-                            <h3 class="upload-title">
-                                <i class="fas fa-upload me-3"></i>Upload Document for Translation
-                            </h3>
-                            <p class="upload-subtitle">Upload your document and get it translated instantly. Files are processed temporarily and not stored permanently.</p>
-                        </div>
-                        
-                        <div class="upload-area" id="uploadArea">
-                            <div class="upload-content">
-                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                                <h4 class="upload-text">Drag & Drop your file here</h4>
-                                <p class="upload-hint">or click to browse</p>
-                                <div class="supported-formats">
-                                    <span class="format-tag">PDF</span>
-                                    <span class="format-tag">DOC</span>
-                                    <span class="format-tag">DOCX</span>
-                                    <span class="format-tag">TXT</span>
-                                </div>
-                            </div>
-                            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" style="display: none;">
-                        </div>
-                        
-                        <div class="upload-progress" id="uploadProgress" style="display: none;">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <p class="progress-text" id="progressText">Uploading...</p>
-                        </div>
-                        
-                        <div class="upload-actions mt-4 text-center">
-                            <button class="btn btn-primary" id="uploadBtn" disabled>
-                                <i class="fas fa-language me-2"></i>Translate Document
-                            </button>
-                            <button class="btn btn-outline-secondary" id="clearBtn" style="display: none;">
-                                <i class="fas fa-times me-2"></i>Clear
-                            </button>
-                        </div>
-                        
-                        <div class="translation-result mt-4" id="translationResult" style="display: none;">
-                            <div class="result-header">
-                                <h5><i class="fas fa-file-alt me-2"></i>Translation Result</h5>
-                                <div class="result-actions">
-                                    <button class="btn btn-sm btn-outline-primary" id="downloadBtn">
-                                        <i class="fas fa-download me-1"></i>Download
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-secondary" id="copyBtn">
-                                        <i class="fas fa-copy me-1"></i>Copy
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="result-content" id="resultContent"></div>
-                        </div>
-                    </div>
+            <div class="carousel-slide" style="background-image: url('static/images/legalImage4.jpg');">
+                <div class="hero-content">
+                    <h1>Empowering African Rights</h1>
+                    <p>Get instant legal advice tailored for your context.</p>
+                    <a href="#about" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Documents Section -->
-    <section class="documents-section py-5" id="documents">
-        <div class="container">
-
-            <div class="row" id="documentCards">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-gavel fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">Kampala Convention</h5>
-                            <p class="card-text">A convention focused on the protection and assistance of internally displaced persons in Africa.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/Kampala_Convention.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="Kampala_Convention.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up delay-1">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-building fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">AU Institutions</h5>
-                            <p class="card-text">Information about the various institutions of the African Union.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/Specialised Agencies & Institutions _ African Union.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="Specialised Agencies & Institutions _ African Union.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up delay-2">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-globe-africa fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">African Charter on Human and Peoples' Rights</h5>
-                            <p class="card-text">This charter outlines the rights and freedoms of African peoples.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/African_Charter_Human_Peoples_Rights.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="African_Charter_Human_Peoples_Rights.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-shield-alt fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">Human Rights Strategy for Africa</h5>
-                            <p class="card-text">A comprehensive strategy document for human rights protection across Africa.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/HUMAN RIGHTS STRATEGY FOR AFRICA.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="human_rights_strategy_for_africa.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up delay-1">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-book fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">Compendium of Key Human Rights Documents</h5>
-                            <p class="card-text">A collection of significant human rights documents from the African Union.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="compedium_key_human_rights.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card animate-fade-in-up delay-2">
-                        <div class="card-body">
-                            <div class="card-icon mb-3">
-                                <i class="fas fa-hands-helping fa-3x text-primary"></i>
-                            </div>
-                            <h5 class="card-title">Making the Kampala Convention Work for IDPs</h5>
-                            <p class="card-text">Implementation guide for the Kampala Convention on internally displaced persons.</p>
-                            <div class="card-actions">
-                                <a href="{{ url_for('static', filename='legal_documents/compedium_key_human_rights.pdf') }}" class="btn btn-success" target="_blank">
-                                    <i class="fas fa-download me-2"></i>Download
-                                </a>
-                                <button class="btn btn-brown find-tutor-btn" 
-                                        data-document="compedium_key_human_rights.pdf.pdf" 
-                                        data-toggle="modal" 
-                                        data-target="#findTutorModal">
-                                    <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    
-    <!-- Chatbot Modal -->
-    <div class="modal fade" id="chatbotModal" tabindex="-1" role="dialog" aria-labelledby="chatbotModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="chatbotModalLabel">Chat with AI Assistant</h5>
-                <button type="button" class="close" aria-label="Close" onclick="location.reload();">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                
-            </div>
-            <div class="modal-body">
-                <!-- Chatbot interface goes here -->
-                <div id="chatbotInterface">
-                    <!-- This is where you can implement the chatbot interface -->
-                    <p>How can I assist you today?</p>
-                    <!-- Example of a simple input for chatbot conversation -->
-                    <input type="text" id="chatInput" placeholder="Type your message" class="form-control">
-                    <button class="btn btn-primary mt-2" id="sendChat">Send</button>
-                    <div id="chatResponse" class="mt-3">
-                        <!-- Responses from the chatbot will appear here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-   
-    <!-- Find Tutor Modal -->
-    <div class="modal fade" id="findTutorModal" tabindex="-1" role="dialog" aria-labelledby="findTutorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="findTutorModalLabel">Choose Your Tutor</h5>
-                <button  type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.reload();">
-                    
-                
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="row">
-                    <div class="modal-body text-center">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button id="summaryButton" class="btn btn-link" onclick="selectTutor('text')">
-                                    <i class="fas fa-book-open fa-3x"></i>
-                                    <p>Summary Tutor</p>
-                                </button>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <button class="btn btn-link" onclick="selectTutor('video')">
-                                    <i class="fas fa-chalkboard-teacher fa-3x"></i>
-                                    <p>Visual Teacher</p>
-                                </button>
-                            </div> 
-                            <div class="col-md-4">
-                                <button class="btn btn-link" onclick="selectTutor('audio')">
-                                    <i class="fas fa-podcast fa-3x"></i>
-                                    <p>Podcast Tutor</p>
-                                </button>
-                            </div>  -->
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    
-                </div>
-                <div id="summaryResult" style="margin-top: 20px;"></div> <!-- Summary result display -->
-            </div>
-            
-            <div class="modal-footer">
-                
-                <div id="google_translate_element" class="translate-box"></div>
-                <button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
-            </div>
             
             
+
+            <div class="carousel-slide" style="background-image: url('static/images/legalImage5.jpg');">
+                <div class="hero-content">
+                    <h1>Justice at Your Fingertips</h1>
+                    <p>Accessible, reliable, and AI-driven legal support.</p>
+                    <a href="#services" class="btn btn-primary">Explore Resources</a>
+                </div>
+            </div>
+
+            <!-- Carousel controls -->
+            <button class="carousel-control prev" aria-label="Previous slide">&#10094;</button>
+            <button class="carousel-control next" aria-label="Next slide">&#10095;</button>
         </div>
+    </section>
+
+    <!-- Floating AI Companion Button -->
+    <div id="floatingBtn" class="floating-btn" title="Open AI Legal Companion" role="button" aria-label="Open AI Legal Companion" tabindex="0">
+        <i class="fas fa-robot"></i>
     </div>
-    </div>
 
-
-
-    
-
-<!-- Add Document Button -->
-<div class="container mt-4 d-flex justify-content-center">
-    <button class="btn btn-primary" data-toggle="modal" data-target="#addDocumentModal" style="background-color: green; margin-bottom: 30px;">Add Document</button>
-</div>
-
-
-<!-- Modal for Adding Document -->
-<div class="modal fade" id="addDocumentModal" tabindex="-1" aria-labelledby="addDocumentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addDocumentModalLabel">
-                    <i class="fas fa-plus-circle me-2"></i>Add New Document
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Document Upload Section -->
-                <div class="upload-section-modal mb-4">
-                    <h6 class="mb-3">
-                        <i class="fas fa-upload me-2"></i>Upload Document File
-                    </h6>
-                    <div class="upload-area-modal" id="modalUploadArea">
-                        <div class="upload-content-modal">
-                            <i class="fas fa-cloud-upload-alt upload-icon-modal"></i>
-                            <h6 class="upload-text-modal">Drag & Drop your document here</h6>
-                            <p class="upload-hint-modal">or click to browse</p>
-                            <div class="supported-formats-modal">
-                                <span class="format-tag-modal">PDF</span>
-                                <span class="format-tag-modal">DOC</span>
-                                <span class="format-tag-modal">DOCX</span>
-                                <span class="format-tag-modal">TXT</span>
-                            </div>
-                        </div>
-                        <input type="file" id="modalFileInput" accept=".pdf,.doc,.docx,.txt" style="display: none;">
-                    </div>
-                    
-                    <div class="file-info-modal" id="modalFileInfo" style="display: none;">
-                        <div class="file-preview">
-                            <i class="fas fa-file-alt file-icon-modal"></i>
-                            <div class="file-details-modal">
-                                <h6 id="modalFileName">Document Name</h6>
-                                <p id="modalFileSize">File Size</p>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-danger" id="removeFileBtn">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Document Details Section -->
-                <div class="document-details-section">
-                    <h6 class="mb-3">
-                        <i class="fas fa-info-circle me-2"></i>Document Information
-                    </h6>
-                    <div class="form-group">
-                        <label for="documentTitle">Document Title *</label>
-                        <input type="text" class="form-control" id="documentTitle" placeholder="Enter document title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="documentDescription">Description *</label>
-                        <textarea class="form-control" id="documentDescription" rows="3" placeholder="Enter document description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="documentCategory">Category</label>
-                        <select class="form-control" id="documentCategory">
-                            <option value="legal">Legal Document</option>
-                            <option value="rights">Human Rights</option>
-                            <option value="convention">Convention</option>
-                            <option value="policy">Policy Document</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- AI Processing Options -->
-                <div class="ai-options-section mt-4">
-                    <h6 class="mb-3">
-                        <i class="fas fa-robot me-2"></i>AI Processing Options
-                    </h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="enableAISummary" checked>
-                        <label class="form-check-label" for="enableAISummary">
-                            Generate AI Summary
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="enableTranslation" checked>
-                        <label class="form-check-label" for="enableTranslation">
-                            Enable Translation Support
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Progress Section -->
-                <div class="progress-section mt-4" id="modalProgressSection" style="display: none;">
-                    <div class="progress">
-                        <div class="progress-bar" id="modalProgressBar" role="progressbar" style="width: 0%"></div>
-                    </div>
-                    <p class="progress-text-modal" id="modalProgressText">Processing...</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <i class="fas fa-times me-1"></i>Cancel
-                </button>
-                <button type="button" class="btn btn-primary" id="saveDocument">
-                    <i class="fas fa-save me-1"></i>Add Document
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-</div>
-  
-<!-- Footer -->
-<footer class="section" style="background: #2c5033; color: white; padding-top: 3rem; padding-bottom: 2rem;">
-    <div class="container">
-        <div class="row">
-            <!-- About -->
-            <div class="col-lg-4 mb-4">
-                <h5 class="mb-3">
-                    <i class="fas fa-balance-scale me-2"></i>
-                    Fahamu Haki Zako
-                </h5>
-                <p>
-                    Empowering Africans through accessible legal knowledge and support. 
-                    Your rights matter, and we're here to help you understand them.
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Empowering Africans Through Legal Knowledge</h2>
+                <p class="section-subtitle">
+                    Fahamu Haki Zako is your trusted companion in understanding legal rights and accessing justice. 
+                    We believe that knowledge is power, and everyone deserves access to clear, understandable legal information.
                 </p>
             </div>
             
-            <!-- Quick Links -->
-            <div class="col-lg-4 mb-4">
-                <h6 class="mb-3">Quick Links</h6>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#home" class="text-light text-decoration-none">Home</a></li>
-                    <li class="mb-2"><a href="#about" class="text-light text-decoration-none">About</a></li>
-                    <li class="mb-2"><a href="#services" class="text-light text-decoration-none">Services</a></li>
-                    <li class="mb-2"><a href="{{ url_for('approutes.legalSupport') }}" class="text-light text-decoration-none">Legal Support</a></li>
-                </ul>
-            </div>
-            
-            <!-- Contact -->
-            <div class="col-lg-4 mb-4">
-                <h6 class="mb-3">Contact</h6>
-                <p class="mb-2">
-                    <i class="fas fa-envelope me-2"></i>
-                    support@fahamuhakizako.org
-                </p>
-                <p class="mb-2">
-                    <i class="fas fa-phone me-2"></i>
-                    +254 700 000 000
-                </p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Compassionate Support</h4>
+                        <p>
+                            We understand that legal issues can be overwhelming. Our platform provides 
+                            empathetic, non-judgmental support for all users, regardless of their situation.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Educational Approach</h4>
+                        <p>
+                            Learn about your rights through clear explanations, interactive tools, 
+                            and AI-powered summaries that make complex legal documents accessible.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Community Focused</h4>
+                        <p>
+                            Built specifically for African communities, our platform addresses 
+                            local legal challenges and provides culturally relevant guidance.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <!-- Sponsors -->
-        <div class="row text-center my-4">
-            <div class="col">
-                <h6 class="mb-3">Our Sponsors</h6>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section" style="background: var(--bg-white);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How We Can Help You</h2>
+                <p class="section-subtitle">
+                    Choose the service that best fits your needs. All tools are designed to be simple, 
+                    secure, and supportive.
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4>Document Summarizer</h4>
+                        <p>
+                            Upload legal documents and get clear, easy-to-understand summaries. 
+                            Perfect for understanding contracts, court documents, or legal notices.
+                        </p>
+                        <div class="tool-features">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>AI-powered analysis</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Multiple file formats</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Privacy protected</span>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('approutes.legalSupport') }}" class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-upload me-2"></i>
+                            Summarize a Document
+                        </a>
+                    </div>
+                </div>
                 
-                <!-- Local Sponsor Logos -->
-                <!-- Local Sponsor Logos -->
-              <a href="https://charmafrica.org/" class="d-inline-block me-3">
-                <img src="{{ url_for('static', filename='images/Charmlogo.png') }}" 
-                     alt="Charm Logo" 
-                     style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+                <div class="col-lg-6">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h4>Legal Chat Support</h4>
+                        <p>
+                            Get instant answers to your legal questions through our AI-powered chat. 
+                            Ask about your rights, legal procedures, or get guidance on next steps.
+                        </p>
+                        <div class="tool-features">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>24/7 availability</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Confidential conversations</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Multilingual support</span>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('approutes.legalSupport') }}" class="btn btn-support w-100 mt-3">
+                            <i class="fas fa-comment-dots me-2"></i>
+                            Start Legal Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+   <!-- Trust Section -->
+<section class="section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="card p-4"> <!-- Added card wrapper -->
+          <h2 class="section-title">Your Privacy and Security Matter</h2>
+          <p class="section-subtitle text-start">
+            We understand that legal matters are sensitive. That's why we've built Fahamu Haki Zako 
+            with your privacy and security as our top priorities.
+          </p>
+          
+          <div class="trust-features">
+            <div class="d-flex align-items-start mb-3">
+              <i class="fas fa-shield-alt text-primary me-3 mt-1"></i>
+              <div>
+                <h5>Secure & Private</h5>
+                <p class="mb-0">Your documents and conversations are encrypted and never shared with third parties.</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-start mb-3">
+              <i class="fas fa-user-secret text-primary me-3 mt-1"></i>
+              <div>
+                <h5>Anonymous Access</h5>
+                <p class="mb-0">Use our services without creating an account. Your identity remains protected.</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-start mb-3">
+              <i class="fas fa-clock text-primary me-3 mt-1"></i>
+              <div>
+                <h5>No Data Retention</h5>
+                <p class="mb-0">Your uploaded documents are processed temporarily and automatically deleted.</p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /card -->
+      </div>
+     
+      <div class="col-lg-6">
+      <div class="tool-card" style=" align-items:center; justify-content:center; display:flex;  background-color: #c04747;">
+      <div class="col-lg-6 text-center">
+        <div class="trust-visual">
+          <i class="fas fa-lock" style=" font-size: 8rem; color: #ffffff; opacity: 1;"></i>
+        </div>
+      </div>
+      </div>
+      </div>
+
+            
+     
+    </div>
+  </div>
+</section>
+
+
+    <!-- CTA Section -->
+    <section class="section" style="background: linear-gradient(135deg, #F3F9F4, #FFF);
+    color: white;">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Understand Your Rights?</h2>
+            <p class="mb-4" style="font-size: 1.2rem; opacity: 0.9;">
+                Join thousands of Africans who have already used Fahamu Haki Zako to better understand their legal rights and options.
+            </p>
+            <a href="{{ url_for('approutes.legalSupport') }}" class="btn btn-accent btn-lg">
+                <i class="fas fa-arrow-right me-2"></i>
+                Get Started Now
             </a>
-            <a href="https://www.civicus.org/" class="d-inline-block me-3">
-                <img src="{{ url_for('static', filename='images/Civicus.jpg') }}" 
+        </div>
+    </section>
+
+   <!-- Footer -->
+<footer class="section" style="background: #286434; color: white; padding-top: 3rem; padding-bottom: 2rem;">
+  <div class="container">
+      <div class="row">
+          <!-- About -->
+          <div class="col-lg-4 mb-4">
+              <h5 class="mb-3">
+                  <i class="fas fa-balance-scale me-2"></i>
+                  Fahamu Haki Zako
+              </h5>
+              <p>
+                  Empowering Africans through accessible legal knowledge and support. 
+                  Your rights matter, and we're here to help you understand them.
+              </p>
+          </div>
+          
+          <!-- Quick Links -->
+          <div class="col-lg-4 mb-4">
+              <h6 class="mb-3">Quick Links</h6>
+              <ul class="list-unstyled">
+                  <li class="mb-2"><a href="#home" class="text-light text-decoration-none">Home</a></li>
+                  <li class="mb-2"><a href="#about" class="text-light text-decoration-none">About</a></li>
+                  <li class="mb-2"><a href="#services" class="text-light text-decoration-none">Services</a></li>
+                  <li class="mb-2"><a href="{{ url_for('approutes.legalSupport') }}" class="text-light text-decoration-none">Legal Support</a></li>
+              </ul>
+          </div>
+          
+          <!-- Contact -->
+          <div class="col-lg-4 mb-4">
+              <h6 class="mb-3">Contact</h6>
+              <p class="mb-2">
+                  <i class="fas fa-envelope me-2"></i>
+                  support@fahamuhakizako.org
+              </p>
+              <p class="mb-2">
+                  <i class="fas fa-phone me-2"></i>
+                  +254 700 000 000
+              </p>
+          </div>
+      </div>
+      
+      <!-- Sponsors -->
+      <div class="row text-center my-4">
+          <div class="col">
+              <h6 class="mb-3">Our Sponsors</h6>
+              
+              <!-- Local Sponsor Logos -->
+              <a href="https://charmafrica.org/" class="d-inline-block me-3">
+                  <img src="{{ url_for('static', filename='images/Charmlogo.png') }}" 
+                       alt="Charm Logo" 
+                       style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+              </a>
+              <a href="https://www.civicus.org/" class="d-inline-block me-3">
+                  <img src="{{ url_for('static', filename='images/Civicus.jpg') }}" 
+                       alt="Magamba Logo" 
+                       style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+              </a>
+
+              <!-- External Sponsor Logo -->
+              <a href="https://magambanetwork.com/africa-wide-virtual-hackathon-2024/" target="_blank" class="d-inline-block">
+                  <img src="{{ url_for('static', filename='images/magambalogo.png') }}" 
+                       alt="Magamba Network" 
+                       style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+              </a>
+
+              <a href="https://defenddefenders.org/" class="d-inline-block me-3">
+                <img src="{{ url_for('static', filename='images/defend.jpg') }}" 
                      alt="Magamba Logo" 
                      style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
             </a>
-
-            <!-- External Sponsor Logo -->
-            <a href="https://magambanetwork.com/africa-wide-virtual-hackathon-2024/" target="_blank" class="d-inline-block">
-                <img src="{{ url_for('static', filename='images/magambalogo.png') }}" 
-                     alt="Magamba Network" 
+            <a href="https://rflgd.org/" class="d-inline-block me-3">
+                <img src="{{ url_for('static', filename='images/RFLD.jpeg') }}" 
+                     alt="Magamba Logo" 
                      style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
             </a>
-
-            <a href="https://defenddefenders.org/" class="d-inline-block me-3">
-              <img src="{{ url_for('static', filename='images/defend.jpg') }}" 
-                   alt="Magamba Logo" 
-                   style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-          </a>
-          <a href="https://rflgd.org/" class="d-inline-block me-3">
-              <img src="{{ url_for('static', filename='images/RFLD.jpeg') }}" 
-                   alt="Magamba Logo" 
-                   style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-          </a>
-       
-        <a href="https://www.sida.se/en" class="d-inline-block me-3">
-          <img src="{{ url_for('static', filename='images/sida.png') }}" 
-               alt="Magamba Logo" 
-               style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-      </a>
-            </div>
-        </div>
+          
+          <a href="https://www.sida.se/en" class="d-inline-block me-3">
+            <img src="{{ url_for('static', filename='images/sida.png') }}" 
+                 alt="Magamba Logo" 
+                 style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+        </a>
     </div>
-        
-        <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
-        
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <p class="mb-0">&copy; 2024 Fahamu Haki Zako. All rights reserved.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <p class="mb-0">Built with love ❤️ for African communities</p>
-            </div>
-        </div>
-    </div>
-  </footer>
-  
-
-
-<!-- jQuery, Popper.js, and Bootstrap JS -->
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      </div>
+      </div>
+      
+      <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+      
+      <div class="row align-items-center">
+          <div class="col-md-6">
+              <p class="mb-0">&copy; 2024 Fahamu Haki Zako. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+              <p class="mb-0">Built with love ❤️ for African communities</p>
+          </div>
+      </div>
+  </div>
+</footer>
 
 
 
-
-<script>
-    if (!navigator.onLine) {
-    // Disable buttons
-    document.querySelectorAll('.find-tutor-btn, #uploadBtn').forEach(btn => {
-        btn.disabled = true;
-        btn.title = "AI features are not available offline";
-    });
-
-    // Optionally hide AI-only sections
-    document.querySelectorAll('.ai-summary, #summaryResult').forEach(el => {
-        el.style.display = 'none';
-    });
-}
-
-    // Modal file upload and document addition functionality
-    let modalSelectedFile = null;
-    let modalDocumentId = 0;
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const modalUploadArea = document.getElementById('modalUploadArea');
-        const modalFileInput = document.getElementById('modalFileInput');
-        const modalFileInfo = document.getElementById('modalFileInfo');
-        const modalFileName = document.getElementById('modalFileName');
-        const modalFileSize = document.getElementById('modalFileSize');
-        const removeFileBtn = document.getElementById('removeFileBtn');
-        const saveDocumentBtn = document.getElementById('saveDocument');
-        const modalProgressSection = document.getElementById('modalProgressSection');
-        const modalProgressBar = document.getElementById('modalProgressBar');
-        const modalProgressText = document.getElementById('modalProgressText');
-
-        // Modal drag and drop functionality
-        modalUploadArea.addEventListener('click', () => modalFileInput.click());
-        
-        modalUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            modalUploadArea.classList.add('dragover');
-        });
-        
-        modalUploadArea.addEventListener('dragleave', () => {
-            modalUploadArea.classList.remove('dragover');
-        });
-        
-        modalUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            modalUploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleModalFileSelect(files[0]);
-            }
-        });
-
-        // Modal file input change
-        modalFileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleModalFileSelect(e.target.files[0]);
-            }
-        });
-
-        // Remove file button
-        removeFileBtn.addEventListener('click', clearModalFile);
-
-        // Save document button
-        saveDocumentBtn.addEventListener('click', saveDocument);
-
-        function handleModalFileSelect(file) {
-            // Validate file type
-            const allowedTypes = ['application/pdf', 'application/msword', 
-                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
-                                'text/plain'];
-            
-            if (!allowedTypes.includes(file.type)) {
-                alert('Please select a valid file type (PDF, DOC, DOCX, or TXT)');
-                return;
-            }
-
-            // Validate file size (max 10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                alert('File size must be less than 10MB');
-                return;
-            }
-
-            modalSelectedFile = file;
-            updateModalFileUI();
-        }
-
-        function updateModalFileUI() {
-            if (modalSelectedFile) {
-                modalFileName.textContent = modalSelectedFile.name;
-                modalFileSize.textContent = (modalSelectedFile.size / 1024 / 1024).toFixed(2) + ' MB';
-                modalFileInfo.style.display = 'block';
-                modalUploadArea.style.display = 'none';
-                
-                // Auto-fill title if empty
-                const titleInput = document.getElementById('documentTitle');
-                if (!titleInput.value) {
-                    const fileName = modalSelectedFile.name.replace(/\.[^/.]+$/, '');
-                    titleInput.value = fileName;
-                }
-            }
-        }
-
-        function clearModalFile() {
-            modalSelectedFile = null;
-            modalFileInfo.style.display = 'none';
-            modalUploadArea.style.display = 'block';
-            modalFileInput.value = '';
-        }
-
-        function saveDocument() {
-            const title = document.getElementById('documentTitle').value;
-            const description = document.getElementById('documentDescription').value;
-            const category = document.getElementById('documentCategory').value;
-            const enableAISummary = document.getElementById('enableAISummary').checked;
-            const enableTranslation = document.getElementById('enableTranslation').checked;
-
-            if (!title || !description) {
-                alert('Please fill in the required fields (Title and Description).');
-                return;
-            }
-
-            if (modalSelectedFile && enableAISummary) {
-                // Upload file and process with AI
-                uploadAndProcessDocument(title, description, category, enableTranslation);
-            } else if (modalSelectedFile) {
-                // Just add document without AI processing
-                addDocumentCard(title, description, category, modalSelectedFile.name);
-                $('#addDocumentModal').modal('hide');
-                resetModal();
-            } else {
-                // Add document without file
-                addDocumentCard(title, description, category, null);
-                $('#addDocumentModal').modal('hide');
-                resetModal();
-            }
-        }
-
-        function uploadAndProcessDocument(title, description, category, enableTranslation) {
-            const formData = new FormData();
-            formData.append('file', modalSelectedFile);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('category', category);
-            formData.append('enable_translation', enableTranslation);
-
-            // Show progress
-            modalProgressSection.style.display = 'block';
-            saveDocumentBtn.disabled = true;
-            saveDocumentBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...';
-
-            // Simulate progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 85) progress = 85;
-                modalProgressBar.style.width = progress + '%';
-                modalProgressText.textContent = `Processing document... ${Math.round(progress)}%`;
-            }, 300);
-
-            // Upload and process document
-            fetch('/chat/upload-and-summarize', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                clearInterval(progressInterval);
-                modalProgressBar.style.width = '100%';
-                modalProgressText.textContent = 'Complete!';
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                // Add the new document card
-                addDocumentCard(title, description, category, modalSelectedFile.name, data.summary);
-                $('#addDocumentModal').modal('hide');
-                resetModal();
-            })
-            .catch(error => {
-                clearInterval(progressInterval);
-                console.error('Error:', error);
-                alert('Error processing document: ' + error.message);
-                resetModal();
-            });
-        }
-
-        function addDocumentCard(title, description, category, filename, summary = null) {
-            modalDocumentId++;
-            const newCard = document.createElement('div');
-            newCard.classList.add('col-lg-4', 'col-md-6', 'mb-4');
-            
-            // Get appropriate icon based on category
-            const categoryIcons = {
-                'legal': 'fas fa-gavel',
-                'rights': 'fas fa-shield-alt',
-                'convention': 'fas fa-handshake',
-                'policy': 'fas fa-file-contract',
-                'other': 'fas fa-file-alt'
-            };
-            
-            const icon = categoryIcons[category] || 'fas fa-file-alt';
-            
-            newCard.innerHTML = `
-                <div class="card animate-fade-in-up">
-                    <div class="card-body">
-                        <div class="card-icon mb-3">
-                            <i class="${icon} fa-3x text-primary"></i>
-                        </div>
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text">${description}</p>
-                        <div class="card-actions">
-                            ${filename ? `<a href="#" class="btn btn-success" onclick="downloadDocument('${filename}')">
-                                <i class="fas fa-download me-2"></i>Download
-                            </a>` : ''}
-                            <button class="btn btn-brown find-tutor-btn" 
-                                    data-document="${filename || 'custom_document'}" 
-                                    data-toggle="modal" 
-                                    data-target="#findTutorModal">
-                                <i class="fas fa-user-graduate me-2"></i>Find Tutor
-                            </button>
-                        </div>
-                        ${summary ? `<div class="ai-summary mt-3" style="display: none;">
-                            <h6><i class="fas fa-robot me-1"></i>AI Summary</h6>
-                            <div class="summary-content">${summary}</div>
-                        </div>` : ''}
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('documentCards').appendChild(newCard);
-            
-            // Add animation delay
-            setTimeout(() => {
-                newCard.style.opacity = '1';
-                newCard.style.transform = 'translateY(0)';
-            }, modalDocumentId * 100);
-        }
-
-        function resetModal() {
-            document.getElementById('documentTitle').value = '';
-            document.getElementById('documentDescription').value = '';
-            document.getElementById('documentCategory').value = 'legal';
-            document.getElementById('enableAISummary').checked = true;
-            document.getElementById('enableTranslation').checked = true;
-            clearModalFile();
-            modalProgressSection.style.display = 'none';
-            saveDocumentBtn.disabled = false;
-            saveDocumentBtn.innerHTML = '<i class="fas fa-save me-1"></i>Add Document';
-        }
-
-        // Global function for downloading documents
-        window.downloadDocument = function(filename) {
-            // This would need to be implemented based on your file storage system
-            alert('Download functionality would be implemented here for: ' + filename);
-        };
-    });
-    $(document).ready(function() {
-    $('#sendChat').click(function() {
-        const userMessage = $('#chatInput').val();
-        if (!userMessage.trim()) return;
-
-        // Clear input field
-        $('#chatInput').val('');
-
-        // Append user's message
-        $('#chatResponse').append(`<p><strong>You:</strong> ${userMessage}</p>`);
-
-        // Scroll to latest
-        $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
-
-        // Send message to Flask
-        $.ajax({
-            type: 'POST',
-            url: "{{ url_for('chat.chat') }}", // or use {{ url_for('chat.chat') }} if inside template
-            contentType: 'application/json',
-            data: JSON.stringify({ message: userMessage }),
-            success: function(response) {
-                let botReply = response.reply || response.error || "Sorry, something went wrong.";
-                $('#chatResponse').append(`<p><strong>Bot:</strong> ${botReply}</p>`);
-                $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                $('#chatResponse').append(`<p><strong>Bot:</strong> Sorry, something went wrong.</p>`);
-                $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
-            }
-        });
-    });
-});
-
-
-$(document).ready(function() {
-    let selectedMethod = '';
-    let selectedLanguage = 'en'; // Default language
-    let selectedDocument = '';  // Store selected document
-
-    // Capture the selected document when the "Find Tutor" button is clicked
-    $('.find-tutor-btn').click(function() {
-        selectedDocument = $(this).data('document'); // Store document name
-    });
-
-    // Function to set the selected delivery method
-    window.selectTutor = function(method) {
-        selectedMethod = method; // Store selected method
-        summarize(); // Call summarize function
-    };
-
-    function summarize() {
-    if (selectedMethod && selectedDocument) {
-        $.ajax({
-            url: "http://127.0.0.1:8000/chat/summarize",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ 
-                document_name: selectedDocument,
-                delivery_method: selectedMethod,
-                language: selectedLanguage
-            }),
-            success: function(data) {
-                console.log(data);
-
-                if (selectedMethod === "video" && data.video_url) {
-                    $('#summaryResult').html(`
-                        <video controls width="400">
-                            <source src="${data.video_url}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    `);
-                } else if (selectedMethod === "audio" && data.audio_url) {
-                    $('#summaryResult').html(`
-                        <audio controls>
-                            <source src="${data.audio_url}" type="audio/mp3">
-                            Your browser does not support the audio tag.
-                        </audio>
-                    `);
-                } else if (data.summary) {
-                    $('#summaryResult').html(data.summary);
-                } else if (data.error) {
-                    $('#summaryResult').text(data.error);
-                } else {
-                    $('#summaryResult').text("No data received.");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-                console.error("Response text:", xhr.responseText);
-                $('#summaryResult').text("An error occurred while processing your request.");
-            }
-        });
-    } else {
-        console.warn("No document or method selected!");
-    }
-}
-});
-
-  document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.querySelector('.search-input');
-        const searchButton = document.querySelector('.search-btn');
-        const cards = document.querySelectorAll('.card');
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-        function performSearch() {
-            const query = searchInput.value.toLowerCase().trim();
-    
-            cards.forEach((card, index) => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                const text = card.querySelector('.card-text').textContent.toLowerCase();
-                const cardContainer = card.closest('.col-lg-4, .col-md-6');
-                
-                if (title.includes(query) || text.includes(query)) {
-                    cardContainer.style.display = "block";
-                    card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
-                } else {
-                    cardContainer.style.display = "none";
-                }
-            });
-        }
-    
-        // Trigger search on button click
-        searchButton.addEventListener('click', performSearch);
-    
-        // Trigger search on "Enter" key
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
+    <!-- Custom JS -->
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                performSearch();
-            }
-        });
-        
-        // Real-time search as user types
-        searchInput.addEventListener('input', function() {
-            clearTimeout(this.searchTimeout);
-            this.searchTimeout = setTimeout(performSearch, 300);
-        });
-    });
-
-    // Scroll to documents function
-    function scrollToDocuments() {
-        document.getElementById('documents').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-
-    // File Upload Functionality
-    let selectedFile = null;
-    let translatedContent = '';
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const uploadProgress = document.getElementById('uploadProgress');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-        const translationResult = document.getElementById('translationResult');
-        const resultContent = document.getElementById('resultContent');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const copyBtn = document.getElementById('copyBtn');
-
-        // Drag and drop functionality
-        uploadArea.addEventListener('click', () => fileInput.click());
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect(files[0]);
-            }
-        });
-
-        // File input change
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
-            }
-        });
-
-        // Upload button click
-        uploadBtn.addEventListener('click', uploadAndTranslate);
-
-        // Clear button click
-        clearBtn.addEventListener('click', clearUpload);
-
-        // Download button click
-        downloadBtn.addEventListener('click', downloadTranslation);
-
-        // Copy button click
-        copyBtn.addEventListener('click', copyTranslation);
-
-        function handleFileSelect(file) {
-            // Validate file type
-            const allowedTypes = ['application/pdf', 'application/msword', 
-                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
-                                'text/plain'];
-            
-            if (!allowedTypes.includes(file.type)) {
-                alert('Please select a valid file type (PDF, DOC, DOCX, or TXT)');
-                return;
-            }
-
-            // Validate file size (max 10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                alert('File size must be less than 10MB');
-                return;
-            }
-
-            selectedFile = file;
-            updateUploadUI();
-        }
-
-        function updateUploadUI() {
-            if (selectedFile) {
-                uploadArea.innerHTML = `
-                    <div class="file-info">
-                        <i class="fas fa-file-alt file-icon"></i>
-                        <div class="file-details">
-                            <h6>${selectedFile.name}</h6>
-                            <p>${(selectedFile.size / 1024 / 1024).toFixed(2)} MB</p>
-                        </div>
-                    </div>
-                `;
-                uploadBtn.disabled = false;
-                clearBtn.style.display = 'inline-block';
-                translationResult.style.display = 'none';
-            }
-        }
-
-        function uploadAndTranslate() {
-            if (!selectedFile) return;
-
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-
-            // Show progress
-            uploadProgress.style.display = 'block';
-            uploadBtn.disabled = true;
-            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
-
-            // Simulate progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 90) progress = 90;
-                progressFill.style.width = progress + '%';
-                progressText.textContent = `Processing... ${Math.round(progress)}%`;
-            }, 200);
-
-            // Upload and translate
-            fetch('/chat/upload-summarize', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                clearInterval(progressInterval);
-                progressFill.style.width = '100%';
-                progressText.textContent = 'Complete!';
-
-                if (data.error) {
-                    throw new Error(data.error);
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-
-                translatedContent = data.summary;
-                showTranslationResult(data);
-            })
-            .catch(error => {
-                clearInterval(progressInterval);
-                console.error('Error:', error);
-                alert('Error processing file: ' + error.message);
-                resetUploadUI();
             });
-        }
+        });
 
-        function showTranslationResult(data) {
-            resultContent.innerHTML = `
-                <div class="file-info">
-                    <i class="fas fa-file-alt file-icon"></i>
-                    <div class="file-details">
-                        <h6>${selectedFile.name}</h6>
-                        <p>Translated to ${data.target_language || 'English'}</p>
-                    </div>
-                </div>
-                <div class="translation-text">
-                    ${data.summary.replace(/\n/g, '<br>')}
-                </div>
-            `;
-            
-            translationResult.style.display = 'block';
-            uploadProgress.style.display = 'none';
-            uploadBtn.innerHTML = '<i class="fas fa-language me-2"></i>Translate Document';
-            uploadBtn.disabled = false;
-        }
+        // Add animation classes on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        function clearUpload() {
-            selectedFile = null;
-            translatedContent = '';
-            uploadArea.innerHTML = `
-                <div class="upload-content">
-                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                    <h4 class="upload-text">Drag & Drop your file here</h4>
-                    <p class="upload-hint">or click to browse</p>
-                    <div class="supported-formats">
-                        <span class="format-tag">PDF</span>
-                        <span class="format-tag">DOC</span>
-                        <span class="format-tag">DOCX</span>
-                        <span class="format-tag">TXT</span>
-                    </div>
-                </div>
-            `;
-            uploadBtn.disabled = true;
-            clearBtn.style.display = 'none';
-            uploadProgress.style.display = 'none';
-            translationResult.style.display = 'none';
-            fileInput.value = '';
-        }
-
-        function resetUploadUI() {
-            uploadBtn.innerHTML = '<i class="fas fa-language me-2"></i>Translate Document';
-            uploadBtn.disabled = false;
-            uploadProgress.style.display = 'none';
-        }
-
-        function downloadTranslation() {
-            if (!translatedContent) return;
-
-            const blob = new Blob([translatedContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `translated_${selectedFile.name.replace(/\.[^/.]+$/, '')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }
-
-        function copyTranslation() {
-            if (!translatedContent) return;
-
-            navigator.clipboard.writeText(translatedContent).then(() => {
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert('Failed to copy to clipboard');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.feature-card, .tool-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+
+        // Carousel logic
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.carousel-control.prev');
+        const nextBtn = document.querySelector('.carousel-control.next');
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        let autoSlideInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentIndex = index;
         }
-    });
 
-    // Add intersection observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % totalSlides;
+            showSlide(nextIndex);
+        }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+        function prevSlide() {
+            let prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(prevIndex);
+        }
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetInterval() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Initialize
+        startAutoSlide();
+
+        // Floating button functionality
+        const floatingBtn = document.getElementById('floatingBtn');
+        const url = "{{ url_for('approutes.legalSupport') }}";
+
+        floatingBtn.addEventListener('click', () => {
+            location.href = url;
+        });
+
+        floatingBtn.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                location.href = url;
             }
         });
-    }, observerOptions);
+    </script>
+     <!-- Load Google Translate widget script -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    // Observe all cards for scroll animations
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            observer.observe(card);
-        });
-    });
-
-    //transalate 
-
-
-</script>
-    
- <!-- Load Google Translate widget script -->
- <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-  </script>
-  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <script>
-    // Map of country codes to local language codes for Google Translate
-    const countryLangMap = {
-  // East Africa
-  "KE": "sw",  // Kenya -> Swahili
-  "UG": "sw",  // Uganda -> Swahili
-  "TZ": "sw",  // Tanzania -> Swahili
-  "RW": "rw",  // Rwanda -> Kinyarwanda
-  "BI": "fr",  // Burundi -> French
-  "ET": "am",  // Ethiopia -> Amharic
-  "SO": "so",  // Somalia -> Somali
-  "SS": "ar",  // South Sudan -> Arabic (English also official)
-  "DJ": "fr",  // Djibouti -> French/Arabic
-
-  // Central Africa
-  "CD": "fr",  // DRC -> French
-  "CG": "fr",  // Congo Republic -> French
-  "CM": "fr",  // Cameroon -> French (also English, but French majority)
-  "CF": "fr",  // Central African Republic -> French
-  "GA": "fr",  // Gabon -> French
-  "GQ": "es",  // Equatorial Guinea -> Spanish
-
-  // West Africa
-  "NG": "en",  // Nigeria -> English
-  "GH": "en",  // Ghana -> English
-  "SN": "fr",  // Senegal -> French
-  "CI": "fr",  // Ivory Coast -> French
-  "ML": "fr",  // Mali -> French
-  "NE": "fr",  // Niger -> French
-  "BF": "fr",  // Burkina Faso -> French
-  "TG": "fr",  // Togo -> French
-  "BJ": "fr",  // Benin -> French
-  "SL": "en",  // Sierra Leone -> English
-  "LR": "en",  // Liberia -> English
-  "GM": "en",  // Gambia -> English
-  "GN": "fr",  // Guinea -> French
-  "GW": "pt",  // Guinea-Bissau -> Portuguese
-  "MR": "ar",  // Mauritania -> Arabic
-
-  // North Africa
-  "DZ": "ar",  // Algeria -> Arabic
-  "MA": "ar",  // Morocco -> Arabic
-  "TN": "ar",  // Tunisia -> Arabic
-  "EG": "ar",  // Egypt -> Arabic
-  "LY": "ar",  // Libya -> Arabic
-  "SD": "ar",  // Sudan -> Arabic
-
-  // Southern Africa
-  "ZA": "en",  // South Africa -> English (Zulu, Afrikaans also common)
-  "NA": "en",  // Namibia -> English
-  "BW": "en",  // Botswana -> English
-  "ZM": "en",  // Zambia -> English
-  "ZW": "en",  // Zimbabwe -> English
-  "MW": "en",  // Malawi -> English
-  "MZ": "pt",  // Mozambique -> Portuguese
-  "AO": "pt",  // Angola -> Portuguese
-  "LS": "en",  // Lesotho -> English
-  "SZ": "en",  // Eswatini -> English
-  "MG": "fr",  // Madagascar -> French
-  "MU": "en",  // Mauritius -> English
-  "SC": "fr",  // Seychelles -> French
-  "CV": "pt",  // Cape Verde -> Portuguese
-  "ST": "pt",  // São Tomé and Príncipe -> Portuguese
-  "KM": "fr",  // Comoros -> French
-
-  // Europe
-  "FR": "fr",  // France -> French
-  "DE": "de",  // Germany -> German
-  "ES": "es",  // Spain -> Spanish
-  "IT": "it",  // Italy -> Italian
-  "PT": "pt",  // Portugal -> Portuguese
-  "NL": "nl",  // Netherlands -> Dutch
-  "SE": "sv",  // Sweden -> Swedish
-  "NO": "no",  // Norway -> Norwegian
-  "FI": "fi",  // Finland -> Finnish
-  "PL": "pl",  // Poland -> Polish
-  "RO": "ro",  // Romania -> Romanian
-  "GR": "el",  // Greece -> Greek
-  "RU": "ru",  // Russia -> Russian
-  "UA": "uk",  // Ukraine -> Ukrainian
-
-  // Asia
-  "CN": "zh-CN", // China -> Chinese Simplified
-  "TW": "zh-TW", // Taiwan -> Chinese Traditional
-  "JP": "ja",    // Japan -> Japanese
-  "KR": "ko",    // South Korea -> Korean
-  "IN": "hi",    // India -> Hindi
-  "PK": "ur",    // Pakistan -> Urdu
-  "BD": "bn",    // Bangladesh -> Bengali
-  "TH": "th",    // Thailand -> Thai
-  "VN": "vi",    // Vietnam -> Vietnamese
-  "PH": "tl",    // Philippines -> Tagalog
-  "ID": "id",    // Indonesia -> Indonesian
-  "MY": "ms",    // Malaysia -> Malay
-  "IR": "fa",    // Iran -> Persian
-
-  // Middle East
-  "SA": "ar",  // Saudi Arabia -> Arabic
-  "AE": "ar",  // UAE -> Arabic
-  "IQ": "ar",  // Iraq -> Arabic
-  "SY": "ar",  // Syria -> Arabic
-  "IL": "he",  // Israel -> Hebrew
-  "TR": "tr",  // Turkey -> Turkish
-
-  // Americas
-  "US": "en",  // United States -> English
-  "CA": "en",  // Canada -> English (fr also possible)
-  "MX": "es",  // Mexico -> Spanish
-  "BR": "pt",  // Brazil -> Portuguese
-  "AR": "es",  // Argentina -> Spanish
-  "CL": "es",  // Chile -> Spanish
-  "CO": "es",  // Colombia -> Spanish
-  "PE": "es",  // Peru -> Spanish
-  "VE": "es",  // Venezuela -> Spanish
-
-  // Oceania
-  "AU": "en",  // Australia -> English
-  "NZ": "en",  // New Zealand -> English
-  "FJ": "en"   // Fiji -> English
-};
-
-
-    // Detect user country and auto-translate
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        const userCountry = data.country;
-        const targetLang = countryLangMap[userCountry] || 'en'; // default English if no mapping
-
-        // Wait for Google Translate widget to load the language dropdown
-        const waitForTranslate = setInterval(() => {
-          const combo = document.querySelector('.goog-te-combo');
-          if (combo) {
-            if (combo.value !== targetLang) {
-              combo.value = targetLang;
-              combo.dispatchEvent(new Event('change'));
+    <script>
+      // Map of country codes to local language codes for Google Translate
+      const countryLangMap = {
+        "KE": "sw",  // Kenya -> Swahili
+        "UG": "sw",  // Uganda -> Swahili
+        "TZ": "sw",  // Tanzania -> Swahili
+        "NG": "en",  // Nigeria -> English
+        "ZA": "en",  // South Africa -> English (could be others)
+        "FR": "fr",  // France -> French
+        "DE": "de",  // Germany -> German
+        "ES": "es",  // Spain -> Spanish
+        "CN": "zh-CN", // China -> Chinese Simplified
+        "JP": "ja",  // Japan -> Japanese
+        "RU": "ru",  // Russia -> Russian
+        "IN": "hi",  // India -> Hindi (also English common)
+        "EG": "ar",  // Egypt -> Arabic
+        // Add more as needed
+      };
+  
+      // Detect user country and auto-translate
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const userCountry = data.country;
+          const targetLang = countryLangMap[userCountry] || 'en'; // default English if no mapping
+  
+          // Wait for Google Translate widget to load the language dropdown
+          const waitForTranslate = setInterval(() => {
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo) {
+              if (combo.value !== targetLang) {
+                combo.value = targetLang;
+                combo.dispatchEvent(new Event('change'));
+              }
+              clearInterval(waitForTranslate);
             }
-            clearInterval(waitForTranslate);
-          }
-        }, 500);
-      })
-      .catch(() => {
-        // On error, do nothing (keep English)
-        console.warn('Could not detect location for auto-translate.');
-      });
-  </script>
-
-
+          }, 500);
+        })
+        .catch(() => {
+          // On error, do nothing (keep English)
+          console.warn('Could not detect location for auto-translate.');
+        });
+    </script>
 </body>
 </html>
