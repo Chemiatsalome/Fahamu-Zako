@@ -48,7 +48,7 @@
 
     /* Navbar */
     .custom-navbar {
-        background: linear-gradient(135deg, #f4ede0 0%, #f3eee8 100%) !important;
+        background: #f5f4de !important;
         backdrop-filter: blur(10px);
         transition: var(--transition);
     }
@@ -99,16 +99,17 @@
         transform: translateY(-2px);
     }
 
-navbar-toggler-icon {
-  display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
-  vertical-align: middle;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
+navbar-toggler {
+  padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+  font-size: var(--bs-navbar-toggler-font-size);
+  line-height: 1;
+  color: var(--bs-navbar-color);
+  background-color: transparent;
+  border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
+  border-radius: var(--bs-navbar-toggler-border-radius);
+  transition: var(--bs-navbar-toggler-transition);
 }
+
 
         /* Align translate widget horizontally, with some spacing */
     .translate-box {
@@ -191,7 +192,7 @@ navbar-toggler-icon {
     min-height: 70vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #eae866 0%, #9ba24b 100%);
+    background: linear-gradient(135deg, #24531d 0%, #9ba24b 100%);
     overflow: hidden;
 }
 
@@ -842,13 +843,13 @@ navbar-toggler-icon {
 }
 
 .btn-brown {
-    background: linear-gradient(45deg, #8B4513, #A0522D);
+    background: linear-gradient(45deg, #dd9502, #8B4513);
     color: white;
     box-shadow: var(--shadow-light);
 }
 
 .btn-brown:hover {
-    background: linear-gradient(45deg, #A0522D, #8B4513);
+    background: linear-gradient(45deg, #dd9502, #8B4513);
     transform: translateY(-2px) scale(1.05);
     box-shadow: var(--shadow-medium);
     color: white;
@@ -1199,12 +1200,12 @@ footer .footer-copy {
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url_for('approutes.index') }}">
                 <i class="fas fa-balance-scale me-2"></i>
                 Fahamu Haki Zako
             </a>
-            <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button  style="color: #1d1c1b;"  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span style="color: #1d1c1b;" class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
@@ -1740,25 +1741,44 @@ footer .footer-copy {
                 <h6 class="mb-3">Our Sponsors</h6>
                 
                 <!-- Local Sponsor Logos -->
-                <a href="#" class="d-inline-block me-3">
-                    <img src="{{ url_for('static', filename='images/Charmlogo.png') }}" 
-                         alt="Charm Logo" 
-                         style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-                </a>
-                <a href="#" class="d-inline-block me-3">
-                    <img src="{{ url_for('static', filename='images/magambalogo.png') }}" 
-                         alt="Magamba Logo" 
-                         style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-                </a>
-  
-                <!-- External Sponsor Logo -->
-                <a href="https://magambanetwork.com/africa-wide-virtual-hackathon-2024/" target="_blank" class="d-inline-block">
-                    <img src="{{ url_for('static', filename='images/magambalogo.png') }}" 
-                         alt="Magamba Network" 
-                         style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
-                </a>
+                <!-- Local Sponsor Logos -->
+              <a href="https://charmafrica.org/" class="d-inline-block me-3">
+                <img src="{{ url_for('static', filename='images/Charmlogo.png') }}" 
+                     alt="Charm Logo" 
+                     style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+            </a>
+            <a href="https://www.civicus.org/" class="d-inline-block me-3">
+                <img src="{{ url_for('static', filename='images/Civicus.jpg') }}" 
+                     alt="Magamba Logo" 
+                     style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+            </a>
+
+            <!-- External Sponsor Logo -->
+            <a href="https://magambanetwork.com/africa-wide-virtual-hackathon-2024/" target="_blank" class="d-inline-block">
+                <img src="{{ url_for('static', filename='images/magambalogo.png') }}" 
+                     alt="Magamba Network" 
+                     style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+            </a>
+
+            <a href="https://defenddefenders.org/" class="d-inline-block me-3">
+              <img src="{{ url_for('static', filename='images/defend.jpg') }}" 
+                   alt="Magamba Logo" 
+                   style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+          </a>
+          <a href="https://rflgd.org/" class="d-inline-block me-3">
+              <img src="{{ url_for('static', filename='images/RFLD.jpeg') }}" 
+                   alt="Magamba Logo" 
+                   style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+          </a>
+       
+        <a href="https://www.sida.se/en" class="d-inline-block me-3">
+          <img src="{{ url_for('static', filename='images/sida.png') }}" 
+               alt="Magamba Logo" 
+               style="max-height: 60px; background:white; padding:8px; border-radius:8px;">
+      </a>
             </div>
         </div>
+    </div>
         
         <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
         
@@ -1783,7 +1803,21 @@ footer .footer-copy {
 
 
 
+
 <script>
+    if (!navigator.onLine) {
+    // Disable buttons
+    document.querySelectorAll('.find-tutor-btn, #uploadBtn').forEach(btn => {
+        btn.disabled = true;
+        btn.title = "AI features are not available offline";
+    });
+
+    // Optionally hide AI-only sections
+    document.querySelectorAll('.ai-summary, #summaryResult').forEach(el => {
+        el.style.display = 'none';
+    });
+}
+
     // Modal file upload and document addition functionality
     let modalSelectedFile = null;
     let modalDocumentId = 0;
