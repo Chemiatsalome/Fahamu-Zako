@@ -2114,7 +2114,7 @@ $(document).ready(function() {
     function summarize() {
     if (selectedMethod && selectedDocument) {
         $.ajax({
-            url: "http://127.0.0.1:8000/chat/summarize",
+            url: "/chat/summarize",
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ 
