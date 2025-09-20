@@ -270,19 +270,20 @@ FALLBACK_SUMMARIES = {
 @chat_bp.route("/summarize", methods=["POST"])
 def summarize_pdf():
     data = request.get_json()
-    document_name = data.get("document_name")
+    document_name = os.path.basename(data.get("document_name", ""))  # ensure filename only
     delivery_method = data.get("delivery_method", "text")
 
     if not document_name:
         return jsonify({"error": "No document specified."}), 400
 
-    LEGAL_DOCS_DIR = r"C:\Users\Salome\Desktop\Anything Skule\Fahamu Haki Zako\static\legal_documents"
+    # Always relative to app root
+    LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
     pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
     if not os.path.exists(pdf_file_path):
         return jsonify({"error": "PDF file not found."}), 404
 
-    # Try AI summary first
+    # Try AI summary
     try:
         pdf_text = load_pdf_text_with_cache(document_name, pdf_file_path)
         if not pdf_text.strip():
@@ -295,8 +296,7 @@ def summarize_pdf():
         fallback_used = False
 
     except Exception as e:
-        # Fallback to predefined summaries
-        print(f"AI model failed or error occurred: {str(e)}")
+        print(f"AI model failed: {str(e)}")  # Log the error
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
         fallback_used = True
 
@@ -312,9 +312,8 @@ def summarize_pdf():
         video_url = f"/static/video/{os.path.basename(video_path)}"
         return jsonify({"video_url": video_url, "fallback_used": fallback_used}), 200
 
-    else:  # text or visual
+    else:
         return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
-
 
 
 @chat_bp.route('/chat', methods=['POST'])
