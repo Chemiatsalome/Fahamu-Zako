@@ -169,34 +169,101 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
     "2010-making-the-kampala-convention-work-thematic-en.pdf": (
-        "This document discusses the implementation of the Kampala Convention, focusing on "
-        "thematic areas such as conflict-induced displacement, protection of displaced persons, "
-        "and recommendations for African governments and institutions."
+        "This report provides an in-depth discussion on the implementation of the Kampala Convention, "
+        "with a particular focus on thematic areas such as displacement caused by armed conflict, natural "
+        "disasters, and human rights abuses. It emphasizes the unique vulnerabilities faced by internally "
+        "displaced persons (IDPs), including loss of homes, separation from families, and lack of access to "
+        "basic services like education and healthcare. The document carefully examines how African states "
+        "can translate the Convention’s legal obligations into practical measures at the national level, "
+        "including developing domestic laws, strengthening institutional frameworks, and ensuring coordination "
+        "with humanitarian actors. Case studies and practical examples are provided to illustrate both "
+        "successes and persistent gaps. In addition, the report puts forward recommendations to the African Union, "
+        "civil society organizations, and governments, calling for stronger accountability, improved data collection, "
+        "and more resources dedicated to the protection and long-term reintegration of displaced populations."
     ),
+
     "African_Charter_Human_Peoples_Rights.pdf": (
-        "The African Charter on Human and Peoples' Rights outlines the rights of individuals "
-        "and peoples in Africa, including civil, political, economic, social, and cultural rights, "
-        "and the obligations of member states."
+        "The African Charter on Human and Peoples’ Rights (also called the Banjul Charter) is one of the most "
+        "foundational human rights instruments in Africa. It provides a comprehensive framework that protects "
+        "both individual rights and collective or ‘peoples’ rights.’ Individual rights include core civil and political "
+        "freedoms such as the right to life, personal liberty, fair trial, freedom of expression, freedom from torture, "
+        "and freedom of association. At the same time, the Charter highlights economic, social, and cultural rights, "
+        "including the right to work, health, education, and full participation in cultural life. A unique aspect of the "
+        "Charter is its emphasis on duties: it states that individuals also have responsibilities toward their families, "
+        "society, and the state. Peoples’ rights outlined in the document include the right to self-determination, the "
+        "right to development, and the right to a satisfactory environment. Member states are required to align their "
+        "domestic laws with these principles and ensure enforcement through both national mechanisms and the African "
+        "Commission on Human and Peoples’ Rights."
     ),
+
     "compedium_key_human_rights.pdf": (
-        "A compendium summarizing key human rights frameworks, treaties, and conventions relevant "
-        "to Africa, highlighting major principles and protections."
+        "This compendium serves as a comprehensive reference guide to major human rights treaties and conventions "
+        "that are applicable within the African context. It summarizes key international documents such as the Universal "
+        "Declaration of Human Rights, the International Covenant on Civil and Political Rights, and the International "
+        "Covenant on Economic, Social and Cultural Rights, while also including African-specific instruments like the "
+        "African Charter on Human and Peoples’ Rights and the Maputo Protocol. Each summary provides background on "
+        "why the treaty was created, the main rights it guarantees, and the obligations it places on states. The compendium "
+        "is designed not just as an academic resource, but also as a tool for policymakers, legal practitioners, and civil "
+        "society organizations working on human rights advocacy. It also highlights recurring themes such as equality, "
+        "non-discrimination, access to justice, and the protection of vulnerable groups, thereby serving as a roadmap for "
+        "anyone trying to navigate the complex but important world of human rights law in Africa."
     ),
+
     "graduate-legislative-fellowship-application-dec2024-fillable.pdf": (
-        "This PDF provides instructions and application forms for the Graduate Legislative Fellowship, "
-        "detailing eligibility criteria, objectives, and submission guidelines."
+        "This document outlines the application form and detailed guidelines for the Graduate Legislative Fellowship, "
+        "a program aimed at equipping young graduates with hands-on experience in legislative and policy-making processes. "
+        "The fellowship seeks to build the next generation of leaders by exposing participants to parliamentary procedures, "
+        "legislative drafting, research, and policy analysis. The document explains the objectives of the fellowship, the "
+        "expected impact on professional growth, and the contributions fellows are expected to make during and after the "
+        "program. Eligibility criteria are carefully spelled out, including the academic qualifications required, preferred "
+        "areas of study, and personal attributes such as leadership, analytical thinking, and commitment to public service. "
+        "The application also details the supporting documents that need to be submitted, deadlines for application, and "
+        "the selection process, which includes both a written evaluation and interviews. The instructions are clear, practical, "
+        "and designed to guide applicants step-by-step, ensuring that the process is transparent and accessible to all eligible "
+        "candidates."
     ),
+
     "human_rights_strategy_for_africa.pdf": (
-        "Outlines strategic priorities and action plans for advancing human rights across African states, "
-        "with recommendations for governments, NGOs, and institutions."
+        "This strategy document presents a continent-wide vision for advancing human rights in Africa. It identifies "
+        "priority areas such as strengthening democratic institutions, ensuring gender equality, protecting vulnerable "
+        "groups including children and persons with disabilities, and expanding access to justice systems. The strategy "
+        "acknowledges both the progress made and the persistent challenges facing African states, such as limited resources, "
+        "weak enforcement of existing laws, and ongoing conflict in some regions. To address these, it sets out clear "
+        "action plans for governments, non-governmental organizations, and regional institutions. These include improving "
+        "data collection on rights violations, building capacity within national human rights commissions, integrating "
+        "human rights education into school curricula, and fostering stronger partnerships between governments and civil "
+        "society. The document also emphasizes the importance of accountability, recommending stronger monitoring and "
+        "evaluation systems, as well as mechanisms for citizens to seek redress. Overall, it provides a forward-looking, "
+        "multi-stakeholder roadmap for strengthening the human rights culture across Africa."
     ),
+
     "Kampala_Convention.pdf": (
-        "The Kampala Convention is Africa's first legally binding instrument addressing the rights "
-        "and protection of internally displaced persons, detailing obligations of states and institutions."
+        "The Kampala Convention, officially the African Union Convention for the Protection and Assistance of Internally "
+        "Displaced Persons in Africa, represents a historic milestone in global human rights law as it is the first legally "
+        "binding regional instrument dedicated to the issue of internal displacement. The Convention covers the entire cycle "
+        "of displacement: prevention, protection during displacement, and long-term solutions. It obligates African states to "
+        "prevent conditions that lead to displacement, including armed conflict, natural disasters, and human rights abuses. "
+        "Once displacement occurs, the Convention requires governments to safeguard the dignity, security, and access to "
+        "services for internally displaced persons (IDPs), including food, shelter, healthcare, and education. It also "
+        "recognizes the role of non-state actors, including armed groups, and holds them accountable for displacement caused "
+        "by their actions. A critical feature of the Convention is its emphasis on durable solutions, urging states to invest "
+        "in safe return, local integration, or resettlement programs for IDPs. By setting legal standards and institutional "
+        "responsibilities, the Kampala Convention strengthens the humanitarian and human rights response to one of Africa’s "
+        "most pressing issues."
     ),
+
     "Specialised Agencies & Institutions _ African Union.pdf": (
-        "Provides an overview of specialized agencies and institutions within the African Union, "
-        "describing their mandates, functions, and how they support human rights and governance."
+        "This document provides a detailed overview of the specialized agencies and institutions established under the "
+        "framework of the African Union (AU). It describes how these bodies are structured, their mandates, and their role "
+        "in advancing the AU’s objectives, particularly in the areas of human rights, governance, peace, and development. "
+        "Examples of such institutions include the African Commission on Human and Peoples’ Rights, which monitors and "
+        "promotes compliance with the African Charter; the Pan-African Parliament, which facilitates citizen participation "
+        "in continental governance; and the African Court on Human and Peoples’ Rights, which provides judicial oversight. "
+        "Other specialized bodies work in health, agriculture, trade, and economic integration, reflecting the AU’s holistic "
+        "approach to development. The document underscores the importance of coordination among these institutions to avoid "
+        "duplication and ensure more effective delivery of services and policies. It also explains how these agencies partner "
+        "with international organizations, civil society, and national governments to promote sustainable development and "
+        "protect human rights across Africa."
     ),
 }
 
@@ -209,13 +276,13 @@ def summarize_pdf():
     if not document_name:
         return jsonify({"error": "No document specified."}), 400
 
-    pdf_file_path = os.path.join(current_app.root_path, "static", "legal_documents", document_name)
-    print(f"Checking for PDF file: {pdf_file_path}")
+    LEGAL_DOCS_DIR = r"C:\Users\Salome\Desktop\Anything Skule\Fahamu Haki Zako\static\legal_documents"
+    pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
     if not os.path.exists(pdf_file_path):
         return jsonify({"error": "PDF file not found."}), 404
 
-    # Try AI summary
+    # Try AI summary first
     try:
         pdf_text = load_pdf_text_with_cache(document_name, pdf_file_path)
         if not pdf_text.strip():
@@ -225,26 +292,29 @@ def summarize_pdf():
         if not summary:
             raise ValueError("AI summary not generated.")
 
+        fallback_used = False
+
     except Exception as e:
         # Fallback to predefined summaries
         print(f"AI model failed or error occurred: {str(e)}")
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
+        fallback_used = True
 
+    # Handle delivery methods
     if delivery_method == "audio":
         audio_path = os.path.join(AUDIO_DIRECTORY, "summary_audio.mp3")
-        success = generate_audio(summary, audio_path)
-        if not success:
-            return jsonify({"error": "Audio generation failed."}), 500
+        generate_audio(summary, audio_path)
         audio_url = "/static/audio/summary_audio.mp3"
-        return jsonify({"audio_url": audio_url, "fallback_used": True}), 200
+        return jsonify({"audio_url": audio_url, "fallback_used": fallback_used}), 200
 
     elif delivery_method == "video":
         video_path = generate_video(summary)
         video_url = f"/static/video/{os.path.basename(video_path)}"
-        return jsonify({"video_url": video_url, "fallback_used": True}), 200
+        return jsonify({"video_url": video_url, "fallback_used": fallback_used}), 200
 
-    else:  # text and visual
-        return jsonify({"summary": summary, "fallback_used": True}), 200
+    else:  # text or visual
+        return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
+
 
 
 @chat_bp.route('/chat', methods=['POST'])
