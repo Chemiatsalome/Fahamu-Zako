@@ -140,33 +140,40 @@ def get_summary_persona(delivery_method, pdf_text):
 
     prompt = personas.get(delivery_method, "Please select a valid delivery method.")
 
-    if delivery_method in ["text", "visual"]:
-        response = client.chat.completions.create(
-            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
-            ],
-            max_tokens=512,
-            temperature=0.7,
-            top_p=0.7,
-            top_k=50,
-            repetition_penalty=1,
-            stop=["<|eot_id|>", "<|eom_id|>"],
-        )
-        if response.choices:
-            return response.choices[0].message.content
+    try:
+        if delivery_method in ["text", "visual"]:
+            response = client.chat.completions.create(
+                model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+                messages=[
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
+                ],
+                max_tokens=512,
+                temperature=0.7,
+                top_p=0.7,
+                top_k=50,
+                repetition_penalty=1,
+                stop=["<|eot_id|>", "<|eom_id|>"],
+            )
+            if response.choices:
+                summary = response.choices[0].message.content
+            else:
+                summary = "Summary could not be generated."
+        elif delivery_method == "audio":
+            summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
+        elif delivery_method == "video":
+            summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
         else:
-            return None
-    elif delivery_method == "audio":
-        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
-        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
+            return "Invalid delivery method selected."
+
+        #Always append chatbot note
+        summary += "\n\nIf you have more questions in regard to this document, please use our chatbot."
+
         return summary
-    elif delivery_method == "video":
-        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
-        return summary
-    else:
-        return "Invalid delivery method selected."
+
+    except Exception as e:
+        return f"Error during summarization: {str(e)}\n\nIf you have more questions in regard to this document, please use our chatbot."
+
 
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
