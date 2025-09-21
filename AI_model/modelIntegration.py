@@ -311,29 +311,32 @@ def summarize_pdf():
     LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
     pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
+    # If the file is missing → fallback immediately
     if not os.path.exists(pdf_file_path):
-        # If doc not found, fallback immediately
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
         return jsonify({"summary": summary, "fallback_used": True}), 200
 
-    # Try AI summary
+    # Default: use fallback, then replace if AI succeeds
+    summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
+    fallback_used = True
+
     try:
         pdf_text = load_pdf_text_with_cache(document_name, pdf_file_path)
 
-        if not pdf_text.strip():
-            raise ValueError("PDF has no readable text.")
+        # Empty or overly large text → skip AI, keep fallback
+        if not pdf_text.strip() or len(pdf_text) > 10000:  # adjust size limit if needed
+            raise ValueError("PDF not suitable for AI summarization.")
 
-        summary = get_summary_persona(delivery_method, pdf_text)
+        # Try AI summary
+        ai_summary = get_summary_persona(delivery_method, pdf_text)
 
-        if not summary or summary.strip() == "":
-            raise ValueError("AI summary not generated.")
-
-        fallback_used = False
+        if ai_summary and ai_summary.strip():
+            summary = ai_summary.strip()
+            fallback_used = False
 
     except Exception as e:
-        print(f"AI model failed: {str(e)}")  # Log the error
-        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-        fallback_used = True
+        print(f"AI summarization failed for {document_name}: {str(e)}")
+        # Do nothing, fallback already set
 
     # Handle delivery methods
     if delivery_method == "audio":
