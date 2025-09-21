@@ -132,19 +132,17 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 
 def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
     personas = {
-        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterisks with html tags for headings.",
+        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings.",
         "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
         "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
         "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
     }
 
-    if delivery_method not in personas:
-        return "Invalid delivery method selected."
-
-    prompt = personas[delivery_method]
+    prompt = personas.get(delivery_method, "Please select a valid delivery method.")
 
     try:
         if delivery_method in ["text", "visual"]:
+            # ✅ Split PDF text into chunks to avoid exceeding token limit
             chunks = [pdf_text[i:i+chunk_size] for i in range(0, len(pdf_text), chunk_size)]
             partial_summaries = []
 
@@ -159,12 +157,10 @@ def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
                     temperature=0.7,
                     top_p=0.7,
                 )
-
                 if response.choices:
-                    # ✅ Fixed: use dict access
-                    content = response.choices[0].message["content"]
-                    partial_summaries.append(content.strip())
+                    partial_summaries.append(response.choices[0].message.content)
 
+            # ✅ Merge all chunk summaries into one
             summary = "\n\n".join(partial_summaries)
 
         elif delivery_method == "audio":
@@ -174,12 +170,12 @@ def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
         else:
             return "Invalid delivery method selected."
 
+        # Always append chatbot note
         summary += "\n\nIf you have more questions in regard to this document, please use our chatbot."
+
         return summary
 
     except Exception as e:
-        import traceback
-        print("Summarization failed:", traceback.format_exc())  # ✅ log full error
         return f"Error during summarization: {str(e)}\n\nIf you have more questions in regard to this document, please use our chatbot."
 
 
