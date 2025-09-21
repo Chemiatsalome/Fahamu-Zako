@@ -129,6 +129,7 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 
     print(f"Extracted and cached text for {document_name}")
     return pdf_text
+
 def get_summary_persona(delivery_method, pdf_text):
      personas = {
         "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings.",
@@ -281,6 +282,7 @@ FALLBACK_SUMMARIES = {
 ),
 
 }
+
 
 @chat_bp.route("/summarize", methods=["POST"])
 def summarize_pdf():
