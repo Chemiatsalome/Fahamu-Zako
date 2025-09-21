@@ -25,6 +25,8 @@ AUDIO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako\static\audio"
 os.makedirs(VIDEO_DIRECTORY, exist_ok=True)
 os.makedirs(AUDIO_DIRECTORY, exist_ok=True)
 
+
+
 @chat_bp.route('/audio/<filename>')
 def serve_audio(filename):
     return send_from_directory(AUDIO_DIRECTORY, filename)
@@ -36,6 +38,43 @@ def serve_video(filename):
 # Initialize Together client
 client = Together(api_key="e3ab4476326269947afb85e9c0b0ed5fe9ae2949e27ed3a38ee4913d8f807b3e")
 
+def get_summary_persona(delivery_method, pdf_text):
+    personas = {
+        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings",
+        "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
+        "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
+        "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
+    }
+
+    prompt = personas.get(delivery_method, "Please select a valid delivery method.")
+
+    if delivery_method in ["text", "visual"]:
+        response = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
+            ],
+            max_tokens=512,
+            temperature=0.7,
+            top_p=0.7,
+            top_k=50,
+            repetition_penalty=1,
+            stop=["<|eot_id|>", "<|eom_id|>"],
+        )
+        if response.choices:
+            return response.choices[0].message.content
+        else:
+            return None
+    elif delivery_method == "audio":
+        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
+        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
+        return summary
+    elif delivery_method == "video":
+        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
+        return summary
+    else:
+        return "Invalid delivery method selected."
 
 def generate_audio(text, audio_path):
     os.makedirs(os.path.dirname(audio_path), exist_ok=True)
@@ -129,45 +168,6 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 
     print(f"Extracted and cached text for {document_name}")
     return pdf_text
-
-def get_summary_persona(delivery_method, pdf_text):
-     personas = {
-        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings.",
-        "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
-        "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
-        "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
-    }
-
-    prompt = personas.get(delivery_method, "Please select a valid delivery method.")
-
-    if delivery_method in ["text", "visual"]:
-        response = client.chat.completions.create(
-            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
-            ],
-            max_tokens=512,
-            temperature=0.7,
-            top_p=0.7,
-            top_k=50,
-            repetition_penalty=1,
-            stop=["<|eot_id|>", "<|eom_id|>"],
-        )
-        if response.choices:
-            return response.choices[0].message.content
-        else:
-            return None
-    elif delivery_method == "audio":
-        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
-        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
-        return summary
-    elif delivery_method == "video":
-        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
-        return summary
-    else:
-        return "Invalid delivery method selected."
-
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
     "2010-making-the-kampala-convention-work-thematic-en.pdf": (
@@ -267,23 +267,7 @@ FALLBACK_SUMMARIES = {
         "with international organizations, civil society, and national governments to promote sustainable development and "
         "protect human rights across Africa."
     ),
-    "compedium_key_human_rights.pdf": (
-    "This compendium serves as a comprehensive reference guide to major human rights treaties and conventions "
-    "that are applicable within the African context. It summarizes key international documents such as the Universal "
-    "Declaration of Human Rights, the International Covenant on Civil and Political Rights, and the International "
-    "Covenant on Economic, Social and Cultural Rights, while also including African-specific instruments like the "
-    "African Charter on Human and Peoples’ Rights, the Maputo Protocol, and the Kampala Convention. Each section "
-    "explains the historical background, the main rights guaranteed, and the obligations that states undertake when "
-    "ratifying these treaties. The document is designed as both an educational resource and a practical tool for "
-    "advocacy, offering clear insights into how these legal frameworks can be applied to protect individuals and "
-    "communities. Themes such as equality, non-discrimination, access to justice, gender equality, and protection of "
-    "vulnerable groups are emphasized throughout. Overall, the compendium acts as a roadmap for legal practitioners, "
-    "civil society, policymakers, and students seeking to navigate and promote human rights within Africa and beyond."
-),
-
 }
-
-
 @chat_bp.route("/summarize", methods=["POST"])
 def summarize_pdf():
     data = request.get_json()
@@ -331,7 +315,6 @@ def summarize_pdf():
 
     else:
         return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
-
 
 
 @chat_bp.route('/chat', methods=['POST'])
