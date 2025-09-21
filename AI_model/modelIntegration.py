@@ -129,9 +129,8 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 
     print(f"Extracted and cached text for {document_name}")
     return pdf_text
-
-def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
-    personas = {
+def get_summary_persona(delivery_method, pdf_text):
+     personas = {
         "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings.",
         "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
         "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
@@ -140,44 +139,33 @@ def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
 
     prompt = personas.get(delivery_method, "Please select a valid delivery method.")
 
-    try:
-        if delivery_method in ["text", "visual"]:
-            # ✅ Split PDF text into chunks to avoid exceeding token limit
-            chunks = [pdf_text[i:i+chunk_size] for i in range(0, len(pdf_text), chunk_size)]
-            partial_summaries = []
-
-            for idx, chunk in enumerate(chunks):
-                response = client.chat.completions.create(
-                    model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-                    messages=[
-                        {"role": "system", "content": prompt},
-                        {"role": "user", "content": f"Summarize this part of the document (part {idx+1}/{len(chunks)}):\n{chunk}"}
-                    ],
-                    max_tokens=512,
-                    temperature=0.7,
-                    top_p=0.7,
-                )
-                if response.choices:
-                    partial_summaries.append(response.choices[0].message.content)
-
-            # ✅ Merge all chunk summaries into one
-            summary = "\n\n".join(partial_summaries)
-
-        elif delivery_method == "audio":
-            summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
-        elif delivery_method == "video":
-            summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
+    if delivery_method in ["text", "visual"]:
+        response = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
+            ],
+            max_tokens=512,
+            temperature=0.7,
+            top_p=0.7,
+            top_k=50,
+            repetition_penalty=1,
+            stop=["<|eot_id|>", "<|eom_id|>"],
+        )
+        if response.choices:
+            return response.choices[0].message.content
         else:
-            return "Invalid delivery method selected."
-
-        # Always append chatbot note
-        summary += "\n\nIf you have more questions in regard to this document, please use our chatbot."
-
+            return None
+    elif delivery_method == "audio":
+        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
+        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
         return summary
-
-    except Exception as e:
-        return f"Error during summarization: {str(e)}\n\nIf you have more questions in regard to this document, please use our chatbot."
-
+    elif delivery_method == "video":
+        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
+        return summary
+    else:
+        return "Invalid delivery method selected."
 
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
@@ -301,20 +289,14 @@ def summarize_pdf():
     delivery_method = data.get("delivery_method", "text")
 
     if not document_name:
-        # Instead of error, return generic fallback
-        return jsonify({
-            "summary": "Summary not available. Please select a valid document.",
-            "fallback_used": True
-        }), 200  
+        return jsonify({"error": "No document specified."}), 400
 
     # Always relative to app root
     LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
     pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
     if not os.path.exists(pdf_file_path):
-        # Instead of 404 error, fallback to predefined or generic
-        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-        return jsonify({"summary": summary, "fallback_used": True}), 200  
+        return jsonify({"error": "PDF file not found."}), 404
 
     # Try AI summary
     try:
@@ -325,11 +307,11 @@ def summarize_pdf():
         summary = get_summary_persona(delivery_method, pdf_text)
         if not summary:
             raise ValueError("AI summary not generated.")
+
         fallback_used = False
 
     except Exception as e:
-        print(f"AI model failed: {str(e)}")  # Log error for debugging
-        # Always default to predefined fallback
+        print(f"AI model failed: {str(e)}")  # Log the error
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
         fallback_used = True
 
