@@ -1521,69 +1521,46 @@ footer .footer-copy {
     </div>
 
    
-    <!-- Find Tutor Modal -->
-    <div class="modal fade" id="findTutorModal" tabindex="-1" role="dialog" aria-labelledby="findTutorModalLabel" aria-hidden="true">
+    <!-- Find Tutor Modal (replace the modal-body with this) -->
+<div class="modal fade" id="findTutorModal" tabindex="-1" role="dialog" aria-labelledby="findTutorModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="findTutorModalLabel">Choose Your Tutor</h5>
-                <button  type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.reload();">
-                    
-                
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="row">
-                    <div class="modal-body text-center">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button id="summaryButton" class="btn btn-link" onclick="selectTutor('text')">
-                                    <i class="fas fa-book-open fa-3x"></i>
-                                    <p>Summary Tutor</p>
-                                    <!-- Loader Spinner -->
-                                    <div id="aiLoader" class="text-center mt-3" style="display: none;">
-                                        <div class="spinner-border text-primary" role="status">
-                                        <span class="sr-only">Processing...</span>
-                                        </div>
-                                        <p class="mt-2">AI is processing your request...</p>
-                                    </div>
-  
-                                </button>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <button class="btn btn-link" onclick="selectTutor('video')">
-                                    <i class="fas fa-chalkboard-teacher fa-3x"></i>
-                                    <p>Visual Teacher</p>
-                                </button>
-                            </div> 
-                            <div class="col-md-4">
-                                <button class="btn btn-link" onclick="selectTutor('audio')">
-                                    <i class="fas fa-podcast fa-3x"></i>
-                                    <p>Podcast Tutor</p>
-                                </button>
-                            </div>  -->
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    
-                </div>
-                <div id="summaryResult" style="margin-top: 20px;"></div> <!-- Summary result display -->
-            </div>
-            
-            <div class="modal-footer">
-                
-                <div id="google_translate_element" class="translate-box"></div>
-                <button type="button" class="btn btn-red" data-dismiss="modal" onclick="location.reload();">Close</button>
-            </div>
-            
-            
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="findTutorModalLabel">Choose Your Tutor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.reload();">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+  
+        <div class="modal-body text-center">
+          <div class="row">
+            <div class="col-md-4">
+              <!-- Summary button (no loader inside the button) -->
+              <button id="summaryButton" class="btn btn-link">
+                <i class="fas fa-book-open fa-3x"></i>
+                <p>Summary Tutor</p>
+              </button>
+            </div>
+          </div>
+  
+          <!-- Loader Spinner (moved OUTSIDE the button) -->
+          <div id="aiLoader" class="text-center mt-3" style="display: none;">
+            <div class="spinner-border text-primary" role="status" aria-hidden="true"></div>
+            <p class="mt-2">AI is processing your request...</p>
+          </div>
+  
+          <!-- Summary results appear here -->
+          <div id="summaryResult" style="margin-top: 20px;"></div>
+        </div>
+  
+        <div class="modal-footer">
+          <div id="google_translate_element" class="translate-box"></div>
+          <button type="button" class="btn btn-red" data-dismiss="modal" onclick="location.reload();">Close</button>
+        </div>
+      </div>
     </div>
-    </div>
-
+  </div>
+  
 
 
     
@@ -2115,87 +2092,99 @@ footer .footer-copy {
 
 
 $(document).ready(function() {
-    let selectedMethod = '';
-    let selectedLanguage = 'en'; // Default language
-    let selectedDocument = '';  // Store selected document
+  let selectedMethod = '';
+  let selectedLanguage = 'en'; // Default language
+  let selectedDocument = '';  // Store selected document
 
-    // Capture the selected document when the "Find Tutor" button is clicked
-    $('.find-tutor-btn').click(function() {
-        selectedDocument = $(this).data('document'); // Store document name
-    });
+  // When a document button is clicked (you already have these)
+  $('.find-tutor-btn').on('click', function() {
+    selectedDocument = $(this).data('document'); // Store document name
+    // show modal if you want to open it programmatically:
+    $('#findTutorModal').modal('show');
+  });
 
-    // Function to set the selected delivery method
-    window.selectTutor = function(method) {
-        selectedMethod = method; // Store selected method
-        summarize(); // Call summarize function
-    };
+  // Do NOT use inline onclick; bind the summary button here
+  $('#summaryButton').on('click', function(e) {
+    e.preventDefault();
 
-    function summarize() {
-        if (selectedMethod && selectedDocument) {
-            // Show loader
-            $("#aiLoader").show();
-            $("#summaryResult").html(""); // Clear previous result
-
-            $.ajax({
-                url: "/chat/summarize",
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ 
-                    document_name: selectedDocument,
-                    delivery_method: selectedMethod,
-                    language: selectedLanguage
-                }),
-                success: function(data) {
-                    console.log(data);
-
-                    // Hide loader
-                    $("#aiLoader").hide();
-
-                    if (selectedMethod === "video" && data.video_url) {
-                        $('#summaryResult').html(`
-                            <video controls width="400">
-                                <source src="${data.video_url}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <p class="mt-2 text-muted">
-                                If you have more questions in regard to this, please use our chatbot below.
-                            </p>
-                        `);
-                    } else if (selectedMethod === "audio" && data.audio_url) {
-                        $('#summaryResult').html(`
-                            <audio controls>
-                                <source src="${data.audio_url}" type="audio/mp3">
-                                Your browser does not support the audio tag.
-                            </audio>
-                            <p class="mt-2 text-muted">
-                                If you have more questions in regard to this, please use our chatbot below.
-                            </p>
-                        `);
-                    } else if (data.summary) {
-                        $('#summaryResult').html(`
-                            ${data.summary}
-                            <p class="mt-2 text-muted">
-                                If you have more questions in regard to this, please use our chatbot below.
-                            </p>
-                        `);
-                    } else if (data.error) {
-                        $('#summaryResult').text(data.error);
-                    } else {
-                        $('#summaryResult').text("No data received. Please try again.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                    console.error("Response text:", xhr.responseText);
-                    $("#aiLoader").hide();
-                    $('#summaryResult').text("An error occurred while processing your request.");
-                }
-            });
-        } else {
-            console.warn("No document or method selected!");
-        }
+    if (!selectedDocument) {
+      $('#summaryResult').html('<div class="text-danger">Please select a document first.</div>');
+      return;
     }
+
+    selectedMethod = 'text'; // summary mode
+
+    // UI: show loader, clear previous results, disable button
+    $('#aiLoader').show();
+    $('#summaryResult').html('');
+    $(this).prop('disabled', true);
+
+    $.ajax({
+      url: "/chat/summarize",          // use relative path (works on laptop/phone when served from same domain)
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        document_name: selectedDocument,
+        delivery_method: selectedMethod,
+        language: selectedLanguage
+      }),
+      timeout: 120000  // 2 minutes in case the model takes long
+    })
+    .done(function(data) {
+      // Build result HTML depending on response
+      if (data.video_url) {
+        $('#summaryResult').html(`
+          <video controls width="100%">
+            <source src="${data.video_url}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="mt-2 text-muted">If you have more questions in regard to this, please use our chatbot below.</p>
+        `);
+      } else if (data.audio_url) {
+        $('#summaryResult').html(`
+          <audio controls>
+            <source src="${data.audio_url}" type="audio/mp3">
+            Your browser does not support the audio tag.
+          </audio>
+          <p class="mt-2 text-muted">If you have more questions in regard to this, please use our chatbot below.</p>
+        `);
+      } else if (data.summary) {
+        // If summary might contain HTML, insert it as-is (be careful about XSS if user-provided)
+        $('#summaryResult').html(`
+          ${data.summary}
+          <p class="mt-2 text-muted">If you have more questions in regard to this, please use our chatbot below.</p>
+        `);
+      } else {
+        $('#summaryResult').html('<div class="text-warning">No summary returned. Please try again or use the chatbot.</div>');
+      }
+    })
+    .fail(function(xhr, status, err) {
+      console.error("Summary request failed:", status, err, xhr.responseText);
+      // Show a friendly fallback message — server should already return fallback summary
+      if (xhr.responseJSON && xhr.responseJSON.summary) {
+        $('#summaryResult').html(xhr.responseJSON.summary + '<p class="mt-2 text-muted">If you have more questions in regard to this, please use our chatbot below.</p>');
+      } else {
+        $('#summaryResult').html('<div class="text-danger">An error occurred while processing your request. Please try again or ask our chatbot for help.</div>');
+      }
+    })
+    .always(function() {
+      // Hide loader and re-enable button
+      $('#aiLoader').hide();
+      $('#summaryButton').prop('disabled', false);
+      // Scroll modal to results
+      $('#findTutorModal .modal-body').animate({ scrollTop: $('#summaryResult').offset().top - $('#findTutorModal .modal-body').offset().top }, 300);
+    });
+  });
+
+
+  // Extra: ensure loader is hidden when modal closes
+  $('#findTutorModal').on('hidden.bs.modal', function() {
+    $('#aiLoader').hide();
+    $('#summaryResult').html('');
+    $('#summaryButton').prop('disabled', false);
+  });
 });
+
 
   document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector('.search-input');
