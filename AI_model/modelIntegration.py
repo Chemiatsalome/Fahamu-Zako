@@ -292,38 +292,37 @@ def summarize_pdf():
     delivery_method = data.get("delivery_method", "text")
 
     if not document_name:
-        return jsonify({"error": "No document specified."}), 400
+        # Instead of error, return generic fallback
+        return jsonify({
+            "summary": "Summary not available. Please select a valid document.",
+            "fallback_used": True
+        }), 200  
 
     # Always relative to app root
     LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
     pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
-    # If the file is missing → fallback immediately
     if not os.path.exists(pdf_file_path):
+        # Instead of 404 error, fallback to predefined or generic
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-        return jsonify({"summary": summary, "fallback_used": True}), 200
+        return jsonify({"summary": summary, "fallback_used": True}), 200  
 
-    # Default: use fallback, then replace if AI succeeds
-    summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-    fallback_used = True
-
+    # Try AI summary
     try:
         pdf_text = load_pdf_text_with_cache(document_name, pdf_file_path)
+        if not pdf_text.strip():
+            raise ValueError("PDF has no text.")
 
-        # Empty or overly large text → skip AI, keep fallback
-        if not pdf_text.strip() or len(pdf_text) > 10000:  # adjust size limit if needed
-            raise ValueError("PDF not suitable for AI summarization.")
-
-        # Try AI summary
-        ai_summary = get_summary_persona(delivery_method, pdf_text)
-
-        if ai_summary and ai_summary.strip():
-            summary = ai_summary.strip()
-            fallback_used = False
+        summary = get_summary_persona(delivery_method, pdf_text)
+        if not summary:
+            raise ValueError("AI summary not generated.")
+        fallback_used = False
 
     except Exception as e:
-        print(f"AI summarization failed for {document_name}: {str(e)}")
-        # Do nothing, fallback already set
+        print(f"AI model failed: {str(e)}")  # Log error for debugging
+        # Always default to predefined fallback
+        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
+        fallback_used = True
 
     # Handle delivery methods
     if delivery_method == "audio":
@@ -337,7 +336,7 @@ def summarize_pdf():
         video_url = f"/static/video/{os.path.basename(video_path)}"
         return jsonify({"video_url": video_url, "fallback_used": fallback_used}), 200
 
-    else:  # text or visual
+    else:
         return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
 
 @chat_bp.route('/chat', methods=['POST'])
