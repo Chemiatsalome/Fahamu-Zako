@@ -283,17 +283,17 @@ FALLBACK_SUMMARIES = {
         "protect human rights across Africa."
     ),
     "compedium_key_human_rights.pdf": (
-    "This compendium serves as a comprehensive reference guide to major human rights treaties and conventions "
-    "that are applicable within the African context. It summarizes key international documents such as the Universal "
-    "Declaration of Human Rights, the International Covenant on Civil and Political Rights, and the International "
-    "Covenant on Economic, Social and Cultural Rights, while also including African-specific instruments like the "
-    "African Charter on Human and Peoples’ Rights, the Maputo Protocol, and the Kampala Convention. Each section "
-    "explains the historical background, the main rights guaranteed, and the obligations that states undertake when "
-    "ratifying these treaties. The document is designed as both an educational resource and a practical tool for "
-    "advocacy, offering clear insights into how these legal frameworks can be applied to protect individuals and "
-    "communities. Themes such as equality, non-discrimination, access to justice, gender equality, and protection of "
-    "vulnerable groups are emphasized throughout. Overall, the compendium acts as a roadmap for legal practitioners, "
-    "civil society, policymakers, and students seeking to navigate and promote human rights within Africa and beyond."
+        "This compendium serves as a comprehensive reference guide to major human rights treaties and conventions "
+        "that are applicable within the African context. It summarizes key international documents such as the Universal "
+        "Declaration of Human Rights, the International Covenant on Civil and Political Rights, and the International "
+        "Covenant on Economic, Social and Cultural Rights, while also including African-specific instruments like the "
+        "African Charter on Human and Peoples’ Rights, the Maputo Protocol, and the Kampala Convention. Each section "
+        "explains the historical background, the main rights guaranteed, and the obligations that states undertake when "
+        "ratifying these treaties. The document is designed as both an educational resource and a practical tool for "
+        "advocacy, offering clear insights into how these legal frameworks can be applied to protect individuals and "
+        "communities. Themes such as equality, non-discrimination, access to justice, gender equality, and protection of "
+        "vulnerable groups are emphasized throughout. Overall, the compendium acts as a roadmap for legal practitioners, "
+        "civil society, policymakers, and students seeking to navigate and promote human rights within Africa and beyond."
 ),
 
 }
