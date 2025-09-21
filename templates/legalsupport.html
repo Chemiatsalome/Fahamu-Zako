@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Human Rights Platform</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1501,6 +1502,15 @@ footer .footer-copy {
                     <!-- Example of a simple input for chatbot conversation -->
                     <input type="text" id="chatInput" placeholder="Type your message" class="form-control">
                     <button class="btn btn-primary mt-2" id="sendChat">Send</button>
+                    
+                    <!-- Loader Spinner -->
+                    <div id="aiLoader" class="text-center mt-3" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Processing...</span>
+                        </div>
+                        <p class="mt-2">AI is processing your request...</p>
+                    </div>
+  
                     <div id="chatResponse" class="mt-3">
                         <!-- Responses from the chatbot will appear here -->
                     </div>
@@ -1531,6 +1541,14 @@ footer .footer-copy {
                                 <button id="summaryButton" class="btn btn-link" onclick="selectTutor('text')">
                                     <i class="fas fa-book-open fa-3x"></i>
                                     <p>Summary Tutor</p>
+                                    <!-- Loader Spinner -->
+                                    <div id="aiLoader" class="text-center mt-3" style="display: none;">
+                                        <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Processing...</span>
+                                        </div>
+                                        <p class="mt-2">AI is processing your request...</p>
+                                    </div>
+  
                                 </button>
                             </div>
                             <!-- <div class="col-md-4">
@@ -2060,39 +2078,40 @@ footer .footer-copy {
             alert('Download functionality would be implemented here for: ' + filename);
         };
     });
-    $(document).ready(function() {
     $('#sendChat').click(function() {
-        const userMessage = $('#chatInput').val();
-        if (!userMessage.trim()) return;
+    const userMessage = $('#chatInput').val();
+    if (!userMessage.trim()) return;
 
-        // Clear input field
-        $('#chatInput').val('');
+    // Clear input field
+    $('#chatInput').val('');
 
-        // Append user's message
-        $('#chatResponse').append(`<p><strong>You:</strong> ${userMessage}</p>`);
+    // Append user's message
+    $('#chatResponse').append(`<p><strong>You:</strong> ${userMessage}</p>`);
+    $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
 
-        // Scroll to latest
-        $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
+    // Show loader
+    $('#aiLoader').show();
 
-        // Send message to Flask
-        $.ajax({
-            type: 'POST',
-            url: "{{ url_for('chat.chat') }}", // or use {{ url_for('chat.chat') }} if inside template
-            contentType: 'application/json',
-            data: JSON.stringify({ message: userMessage }),
-            success: function(response) {
-                let botReply = response.reply || response.error || "Sorry, something went wrong.";
-                $('#chatResponse').append(`<p><strong>Bot:</strong> ${botReply}</p>`);
-                $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                $('#chatResponse').append(`<p><strong>Bot:</strong> Sorry, something went wrong.</p>`);
-                $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
-            }
-        });
+    $.ajax({
+        type: 'POST',
+        url: "{{ url_for('chat.chat') }}", 
+        contentType: 'application/json',
+        data: JSON.stringify({ message: userMessage }),
+        success: function(response) {
+            $('#aiLoader').hide(); // Hide loader
+            let botReply = response.reply || response.error || "Sorry, something went wrong.";
+            $('#chatResponse').append(`<p><strong>Bot:</strong> ${botReply}</p>`);
+            $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
+        },
+        error: function(xhr, status, error) {
+            $('#aiLoader').hide(); // Hide loader
+            console.error(error);
+            $('#chatResponse').append(`<p><strong>Bot:</strong> Sorry, something went wrong.</p>`);
+            $('#chatResponse').scrollTop($('#chatResponse')[0].scrollHeight);
+        }
     });
 });
+
 
 
 $(document).ready(function() {
@@ -2112,51 +2131,70 @@ $(document).ready(function() {
     };
 
     function summarize() {
-    if (selectedMethod && selectedDocument) {
-        $.ajax({
-            url: "/chat/summarize",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ 
-                document_name: selectedDocument,
-                delivery_method: selectedMethod,
-                language: selectedLanguage
-            }),
-            success: function(data) {
-                console.log(data);
+        if (selectedMethod && selectedDocument) {
+            // Show loader
+            $("#aiLoader").show();
+            $("#summaryResult").html(""); // Clear previous result
 
-                if (selectedMethod === "video" && data.video_url) {
-                    $('#summaryResult').html(`
-                        <video controls width="400">
-                            <source src="${data.video_url}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    `);
-                } else if (selectedMethod === "audio" && data.audio_url) {
-                    $('#summaryResult').html(`
-                        <audio controls>
-                            <source src="${data.audio_url}" type="audio/mp3">
-                            Your browser does not support the audio tag.
-                        </audio>
-                    `);
-                } else if (data.summary) {
-                    $('#summaryResult').html(data.summary);
-                } else if (data.error) {
-                    $('#summaryResult').text(data.error);
-                } else {
-                    $('#summaryResult').text("No data received.");
+            $.ajax({
+                url: "/chat/summarize",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 
+                    document_name: selectedDocument,
+                    delivery_method: selectedMethod,
+                    language: selectedLanguage
+                }),
+                success: function(data) {
+                    console.log(data);
+
+                    // Hide loader
+                    $("#aiLoader").hide();
+
+                    if (selectedMethod === "video" && data.video_url) {
+                        $('#summaryResult').html(`
+                            <video controls width="400">
+                                <source src="${data.video_url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="mt-2 text-muted">
+                                If you have more questions in regard to this, please use our chatbot below.
+                            </p>
+                        `);
+                    } else if (selectedMethod === "audio" && data.audio_url) {
+                        $('#summaryResult').html(`
+                            <audio controls>
+                                <source src="${data.audio_url}" type="audio/mp3">
+                                Your browser does not support the audio tag.
+                            </audio>
+                            <p class="mt-2 text-muted">
+                                If you have more questions in regard to this, please use our chatbot below.
+                            </p>
+                        `);
+                    } else if (data.summary) {
+                        $('#summaryResult').html(`
+                            ${data.summary}
+                            <p class="mt-2 text-muted">
+                                If you have more questions in regard to this, please use our chatbot below.
+                            </p>
+                        `);
+                    } else if (data.error) {
+                        $('#summaryResult').text(data.error);
+                    } else {
+                        $('#summaryResult').text("No data received. Please try again.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    console.error("Response text:", xhr.responseText);
+                    $("#aiLoader").hide();
+                    $('#summaryResult').text("An error occurred while processing your request.");
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-                console.error("Response text:", xhr.responseText);
-                $('#summaryResult').text("An error occurred while processing your request.");
-            }
-        });
-    } else {
-        console.warn("No document or method selected!");
+            });
+        } else {
+            console.warn("No document or method selected!");
+        }
     }
-}
 });
 
   document.addEventListener("DOMContentLoaded", function () {
