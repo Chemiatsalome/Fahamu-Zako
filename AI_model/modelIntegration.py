@@ -130,9 +130,9 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
     print(f"Extracted and cached text for {document_name}")
     return pdf_text
 
-def get_summary_persona(delivery_method, pdf_text):
+def get_summary_persona(delivery_method, pdf_text, chunk_size=5000):
     personas = {
-        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings",
+        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings.",
         "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
         "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
         "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
@@ -142,23 +142,27 @@ def get_summary_persona(delivery_method, pdf_text):
 
     try:
         if delivery_method in ["text", "visual"]:
-            response = client.chat.completions.create(
-                model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-                messages=[
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
-                ],
-                max_tokens=512,
-                temperature=0.7,
-                top_p=0.7,
-                top_k=50,
-                repetition_penalty=1,
-                stop=["<|eot_id|>", "<|eom_id|>"],
-            )
-            if response.choices:
-                summary = response.choices[0].message.content
-            else:
-                summary = "Summary could not be generated."
+            # ✅ Split PDF text into chunks to avoid exceeding token limit
+            chunks = [pdf_text[i:i+chunk_size] for i in range(0, len(pdf_text), chunk_size)]
+            partial_summaries = []
+
+            for idx, chunk in enumerate(chunks):
+                response = client.chat.completions.create(
+                    model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+                    messages=[
+                        {"role": "system", "content": prompt},
+                        {"role": "user", "content": f"Summarize this part of the document (part {idx+1}/{len(chunks)}):\n{chunk}"}
+                    ],
+                    max_tokens=512,
+                    temperature=0.7,
+                    top_p=0.7,
+                )
+                if response.choices:
+                    partial_summaries.append(response.choices[0].message.content)
+
+            # ✅ Merge all chunk summaries into one
+            summary = "\n\n".join(partial_summaries)
+
         elif delivery_method == "audio":
             summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
         elif delivery_method == "video":
@@ -166,14 +170,13 @@ def get_summary_persona(delivery_method, pdf_text):
         else:
             return "Invalid delivery method selected."
 
-        #Always append chatbot note
+        # Always append chatbot note
         summary += "\n\nIf you have more questions in regard to this document, please use our chatbot."
 
         return summary
 
     except Exception as e:
         return f"Error during summarization: {str(e)}\n\nIf you have more questions in regard to this document, please use our chatbot."
-
 
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
