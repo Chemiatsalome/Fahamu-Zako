@@ -212,20 +212,7 @@ FALLBACK_SUMMARIES = {
         "domestic laws with these principles and ensure enforcement through both national mechanisms and the African "
         "Commission on Human and Peoples’ Rights."
     ),
-
-    "compedium_key_human_rights.pdf": (
-        "This compendium serves as a comprehensive reference guide to major human rights treaties and conventions "
-        "that are applicable within the African context. It summarizes key international documents such as the Universal "
-        "Declaration of Human Rights, the International Covenant on Civil and Political Rights, and the International "
-        "Covenant on Economic, Social and Cultural Rights, while also including African-specific instruments like the "
-        "African Charter on Human and Peoples’ Rights and the Maputo Protocol. Each summary provides background on "
-        "why the treaty was created, the main rights it guarantees, and the obligations it places on states. The compendium "
-        "is designed not just as an academic resource, but also as a tool for policymakers, legal practitioners, and civil "
-        "society organizations working on human rights advocacy. It also highlights recurring themes such as equality, "
-        "non-discrimination, access to justice, and the protection of vulnerable groups, thereby serving as a roadmap for "
-        "anyone trying to navigate the complex but important world of human rights law in Africa."
-    ),
-
+    
     "graduate-legislative-fellowship-application-dec2024-fillable.pdf": (
         "This document outlines the application form and detailed guidelines for the Graduate Legislative Fellowship, "
         "a program aimed at equipping young graduates with hands-on experience in legislative and policy-making processes. "
