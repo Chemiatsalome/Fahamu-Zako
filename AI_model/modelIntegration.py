@@ -349,58 +349,6 @@ def summarize_pdf():
 
     else:  # text or visual
         return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
-@chat_bp.route("/summarize", methods=["POST"])
-def summarize_pdf():
-    data = request.get_json()
-    document_name = os.path.basename(data.get("document_name", ""))  # ensure filename only
-    delivery_method = data.get("delivery_method", "text")
-
-    if not document_name:
-        return jsonify({"error": "No document specified."}), 400
-
-    # Always relative to app root
-    LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
-    pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
-
-    if not os.path.exists(pdf_file_path):
-        # If doc not found, fallback immediately
-        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-        return jsonify({"summary": summary, "fallback_used": True}), 200
-
-    # Try AI summary
-    try:
-        pdf_text = load_pdf_text_with_cache(document_name, pdf_file_path)
-
-        if not pdf_text.strip():
-            raise ValueError("PDF has no readable text.")
-
-        summary = get_summary_persona(delivery_method, pdf_text)
-
-        if not summary or summary.strip() == "":
-            raise ValueError("AI summary not generated.")
-
-        fallback_used = False
-
-    except Exception as e:
-        print(f"AI model failed: {str(e)}")  # Log the error
-        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
-        fallback_used = True
-
-    # Handle delivery methods
-    if delivery_method == "audio":
-        audio_path = os.path.join(AUDIO_DIRECTORY, "summary_audio.mp3")
-        generate_audio(summary, audio_path)
-        audio_url = "/static/audio/summary_audio.mp3"
-        return jsonify({"audio_url": audio_url, "fallback_used": fallback_used}), 200
-
-    elif delivery_method == "video":
-        video_path = generate_video(summary)
-        video_url = f"/static/video/{os.path.basename(video_path)}"
-        return jsonify({"video_url": video_url, "fallback_used": fallback_used}), 200
-
-    else:  # text or visual
-        return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
-
 
 @chat_bp.route('/chat', methods=['POST'])
 def chat():
