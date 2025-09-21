@@ -36,43 +36,6 @@ def serve_video(filename):
 # Initialize Together client
 client = Together(api_key="e3ab4476326269947afb85e9c0b0ed5fe9ae2949e27ed3a38ee4913d8f807b3e")
 
-def get_summary_persona(delivery_method, pdf_text):
-    personas = {
-        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings",
-        "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
-        "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
-        "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
-    }
-
-    prompt = personas.get(delivery_method, "Please select a valid delivery method.")
-
-    if delivery_method in ["text", "visual"]:
-        response = client.chat.completions.create(
-            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
-            ],
-            max_tokens=512,
-            temperature=0.7,
-            top_p=0.7,
-            top_k=50,
-            repetition_penalty=1,
-            stop=["<|eot_id|>", "<|eom_id|>"],
-        )
-        if response.choices:
-            return response.choices[0].message.content
-        else:
-            return None
-    elif delivery_method == "audio":
-        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
-        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
-        return summary
-    elif delivery_method == "video":
-        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
-        return summary
-    else:
-        return "Invalid delivery method selected."
 
 def generate_audio(text, audio_path):
     os.makedirs(os.path.dirname(audio_path), exist_ok=True)
@@ -166,6 +129,45 @@ def load_pdf_text_with_cache(document_name, pdf_file_path):
 
     print(f"Extracted and cached text for {document_name}")
     return pdf_text
+
+def get_summary_persona(delivery_method, pdf_text):
+    personas = {
+        "text": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing the summary into easy-to-understand sections with clear headings, and highlighting the main points and any important terms. Replace the asterics with html tags for headings",
+        "visual": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document by organizing the content into easy-to-understand sections with clear headings, and suggest visuals that could help clarify the concepts.",
+        "audio": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document clearly, focusing on the main ideas and using straightforward language to ensure it's suitable for an audio presentation.",
+        "video": "You are a helpful assistant who explains legal documents in simple terms. Summarize the following document, organizing it into well-defined sections with headings, and ensuring the summary is suitable for video presentation."
+    }
+
+    prompt = personas.get(delivery_method, "Please select a valid delivery method.")
+
+    if delivery_method in ["text", "visual"]:
+        response = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"Summarize the following document:\n{pdf_text}"}
+            ],
+            max_tokens=512,
+            temperature=0.7,
+            top_p=0.7,
+            top_k=50,
+            repetition_penalty=1,
+            stop=["<|eot_id|>", "<|eom_id|>"],
+        )
+        if response.choices:
+            return response.choices[0].message.content
+        else:
+            return None
+    elif delivery_method == "audio":
+        # For audio/video, it's better to summarize the whole text, but here a snippet for testing
+        summary = f"Audio Summary of the Document:\n{pdf_text[:200]}..."
+        return summary
+    elif delivery_method == "video":
+        summary = f"Video Summary of the Document:\n{pdf_text[:200]}..."
+        return summary
+    else:
+        return "Invalid delivery method selected."
+
 # Predefined summaries for fallback
 FALLBACK_SUMMARIES = {
     "2010-making-the-kampala-convention-work-thematic-en.pdf": (
@@ -274,14 +276,20 @@ def summarize_pdf():
     delivery_method = data.get("delivery_method", "text")
 
     if not document_name:
-        return jsonify({"error": "No document specified."}), 400
+        # Instead of error, return generic fallback
+        return jsonify({
+            "summary": "Summary not available. Please select a valid document.",
+            "fallback_used": True
+        }), 200  
 
     # Always relative to app root
     LEGAL_DOCS_DIR = os.path.join(current_app.root_path, "static", "legal_documents")
     pdf_file_path = os.path.join(LEGAL_DOCS_DIR, document_name)
 
     if not os.path.exists(pdf_file_path):
-        return jsonify({"error": "PDF file not found."}), 404
+        # Instead of 404 error, fallback to predefined or generic
+        summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
+        return jsonify({"summary": summary, "fallback_used": True}), 200  
 
     # Try AI summary
     try:
@@ -292,11 +300,11 @@ def summarize_pdf():
         summary = get_summary_persona(delivery_method, pdf_text)
         if not summary:
             raise ValueError("AI summary not generated.")
-
         fallback_used = False
 
     except Exception as e:
-        print(f"AI model failed: {str(e)}")  # Log the error
+        print(f"AI model failed: {str(e)}")  # Log error for debugging
+        # Always default to predefined fallback
         summary = FALLBACK_SUMMARIES.get(document_name, "Summary not available for this document.")
         fallback_used = True
 
@@ -314,6 +322,7 @@ def summarize_pdf():
 
     else:
         return jsonify({"summary": summary, "fallback_used": fallback_used}), 200
+
 
 
 @chat_bp.route('/chat', methods=['POST'])
